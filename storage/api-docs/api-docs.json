@@ -493,12 +493,12 @@
             }
         },
         "/stores/{id}": {
-            "put": {
+            "post": {
                 "tags": [
                     "Store"
                 ],
                 "summary": "Update an existing store",
-                "operationId": "065bcbb455f32afbfe9ab9ef0d2abf48",
+                "operationId": "34330d27be3e71e04c99009256f0881a",
                 "parameters": [
                     {
                         "name": "id",

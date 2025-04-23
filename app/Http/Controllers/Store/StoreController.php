@@ -243,7 +243,7 @@ class StoreController extends Controller
         return $this->storeService->getStoreById($store);
     }
     /**
-     * @OA\Put(
+     * @OA\Post(
      *     path="/stores/{id}",
      *     tags={"Store"},
      *     summary="Update an existing store",
