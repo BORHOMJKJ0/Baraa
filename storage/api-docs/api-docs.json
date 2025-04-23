@@ -1,0 +1,1305 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Baraa API",
+        "description": "API documentation for the SuperMarket",
+        "contact": {
+            "email": "support@yourapi.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api"
+        }
+    ],
+    "paths": {
+        "/users/register": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create a new user account",
+                "operationId": "81636eb67729e0b063508988a10ee48b",
+                "requestBody": {
+                    "description": "User registration data",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "first_name",
+                                    "last_name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation",
+                                    "location"
+                                ],
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "Nour alden"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "Khlil"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "khlilnoor0@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "1234567890"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "1234567890"
+                                    },
+                                    "location": {
+                                        "type": "string",
+                                        "example": "Damascus"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User registered successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "User registered successfully! ,check your email for verification code"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "first_name": {
+                                                            "type": "string",
+                                                            "example": "Nour alden"
+                                                        },
+                                                        "last_name": {
+                                                            "type": "string",
+                                                            "example": "Khlil"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "khlilnoor0@gmail.com"
+                                                        },
+                                                        "location": {
+                                                            "type": "string",
+                                                            "example": "Damascus"
+                                                        },
+                                                        "image": {
+                                                            "type": "string",
+                                                            "format": "url",
+                                                            "example": "https://ip:8000/storage/images/photo.jpg"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 201
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation failed"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "The email has already been taken."
+                                                },
+                                                "password": {
+                                                    "type": "string",
+                                                    "example": "The password field confirmation does not match."
+                                                },
+                                                "password_confirmation": {
+                                                    "type": "string",
+                                                    "example": "The password confirmation field must match password."
+                                                },
+                                                "app_password": {
+                                                    "type": "string",
+                                                    "example": "The selected app password is invalid."
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 400
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/emailVerify": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Account verification using an OTP",
+                "operationId": "3d78dac5bf83a802db173c9e12816e94",
+                "requestBody": {
+                    "description": "Account verification information",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "otp"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "khlilnoor0@gmail.com"
+                                    },
+                                    "otp": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Email Verified successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Email Verified successfully, You can use the app now"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "first_name": {
+                                                            "type": "string",
+                                                            "example": "Abood"
+                                                        },
+                                                        "last_name": {
+                                                            "type": "string",
+                                                            "example": "Sarhan"
+                                                        },
+                                                        "location": {
+                                                            "type": "string",
+                                                            "example": "Damascus"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "habuazan@gmail.com"
+                                                        },
+                                                        "image": {
+                                                            "type": "string",
+                                                            "example": null
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation failed"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "otp": {
+                                                    "type": "string",
+                                                    "example": "The provided OTP is invalid."
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 400
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Log in using email and password",
+                "operationId": "a0a82a4e43c917fea658c46f4538e1f8",
+                "requestBody": {
+                    "description": "Login information",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "khlilnoor0@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "fcm_token": {
+                                        "type": "string",
+                                        "example": "dpTcAzVoQFil-nyJYaTJd7:APA91bGmhBPVV1MtbKFGrYcIqyMaEycdGXPzOgahYSfM3iLaYQTXQGSG5D-YomRDo7-VqvxWsJOYTYYG3Ae_btPHnZZ_b6XoNahkdo7B5bO4sk-I6AeP7_Q"
+                                    },
+                                    "remember_me": {
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Logged in successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Logged in successfully"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "first_name": {
+                                                            "type": "string",
+                                                            "example": "Omar"
+                                                        },
+                                                        "last_name": {
+                                                            "type": "string",
+                                                            "example": "Borhom"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "habuazan@gmail.com"
+                                                        },
+                                                        "location": {
+                                                            "type": "string",
+                                                            "example": "Damascus"
+                                                        },
+                                                        "image": {
+                                                            "type": "string",
+                                                            "format": "url",
+                                                            "example": "http://127.0.0.1:8000/storage/images/tfg43fGPSvMYQ3AGZsJFtYTrqCxibGHSiaRSaZpk.png"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Incorrect password",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Incorrect password"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 401
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation failed"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 400
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "The selected email is invalid."
+                                                },
+                                                "remember_me": {
+                                                    "type": "string",
+                                                    "example": "The selected remember me is invalid."
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/logout": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Log out of account",
+                "operationId": "6db20d164b14d7b03d3011d7229d2b7d",
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "multipart/form-data": {}
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Logged out successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Logged out successfully!"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 401
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/users/profile": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Show user profile",
+                "operationId": "88f8bb451f2e5a9a39fff2f40fd57709",
+                "responses": {
+                    "200": {
+                        "description": "Get profile successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Get profile successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "first_name": {
+                                                            "type": "string",
+                                                            "example": "Omar"
+                                                        },
+                                                        "last_name": {
+                                                            "type": "string",
+                                                            "example": "Borhom"
+                                                        },
+                                                        "location": {
+                                                            "type": "string",
+                                                            "example": "Damascus"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "habuazan@gmail.com"
+                                                        },
+                                                        "image": {
+                                                            "type": "string",
+                                                            "format": "url",
+                                                            "example": "http://127.0.0.1:8000/storage/images/tfg43fGPSvMYQ3AGZsJFtYTrqCxibGHSiaRSaZpk.png"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 401
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/users/update": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update user information",
+                "operationId": "3645214287b3a20c2430f11395ad1f9e",
+                "requestBody": {
+                    "description": "Update Profile Data",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "Nour alden"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "khlil"
+                                    },
+                                    "location": {
+                                        "type": "string",
+                                        "example": "Damascus"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "khlilnoor0@gmail.com"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Profile updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Profile updated successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "first_name": {
+                                                            "type": "string",
+                                                            "example": "nour"
+                                                        },
+                                                        "last_name": {
+                                                            "type": "string",
+                                                            "example": "Uncle"
+                                                        },
+                                                        "location": {
+                                                            "type": "string",
+                                                            "example": "Damascus"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "habuazan@gmail.com"
+                                                        },
+                                                        "image": {
+                                                            "type": "string",
+                                                            "format": "url",
+                                                            "example": "http://127.0.0.1:8000/storage/images/V9DsnWtuMGaiQUKng05Zavz5NaGNL6qSFewAGzLn.png"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 201
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation failed"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "first_name": {
+                                                    "type": "string",
+                                                    "example": "The first_name field format is invalid."
+                                                },
+                                                "last_name": {
+                                                    "type": "string",
+                                                    "example": "The last_name field format is invalid."
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 400
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 401
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/users/forgetPassword": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Send an OTP to the user to reset the password",
+                "operationId": "efa29a3302c50ffc16aed9ed5e0f5295",
+                "requestBody": {
+                    "description": "User email",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "khlilnoor0@gmail.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Check your email for reset password",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Check your email for reset password!"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation failed"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "The selected email is invalid."
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 400
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/resetPassword": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Reset password using an OTP",
+                "operationId": "a61934e1175bdf9ad3ed71d157c95447",
+                "requestBody": {
+                    "description": "Email, new password, password confirmation, and OTP",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "khlilnoor0@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "1234567890"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "1234567890"
+                                    },
+                                    "otp": {
+                                        "type": "integer",
+                                        "example": 123456
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Password reset successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Password reset successfully!"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 201
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation failed"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "The selected email is invalid."
+                                                },
+                                                "password": {
+                                                    "type": "string",
+                                                    "example": "The password field confirmation does not match."
+                                                },
+                                                "otp": {
+                                                    "type": "string",
+                                                    "example": "The otp field must be a number."
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 400
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/resendOTP": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Resend an OTP for password reset or email verification",
+                "operationId": "0b967a8ed683f356b7eefac034349065",
+                "parameters": [
+                    {
+                        "name": "subject",
+                        "in": "query",
+                        "description": "Notification subject (Allowed values: resetPassword, emailVerify)",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "resetPassword",
+                                "emailVerify"
+                            ]
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "User email",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "khlilnoor0@gmail.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Resend OTP successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Resend OTP successfully!"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation failed"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "The selected email is invalid."
+                                                },
+                                                "subject": {
+                                                    "type": "string",
+                                                    "example": "The selected subject is invalid."
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 400
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/delete": {
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Delete user account",
+                "operationId": "ff594ee5b7835fa7af8ce621e4cd0eaf",
+                "responses": {
+                    "200": {
+                        "description": "Account deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Account deleted successfully!"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 401
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/users/refreshToken": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Refresh JWT after expiration",
+                "operationId": "9d0748c70daaee29d5543cfe85ac3de4",
+                "requestBody": {
+                    "description": "Old JWT token",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "token": {
+                                        "type": "string",
+                                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Token refreshed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Token refreshed"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "new.jwt.token.here"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized responses",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "successful": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "Unauthenticated"
+                                                },
+                                                "status_code": {
+                                                    "type": "integer",
+                                                    "example": 401
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "properties": {
+                                                "successful": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "Invalid token"
+                                                },
+                                                "status_code": {
+                                                    "type": "integer",
+                                                    "example": 401
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "properties": {
+                                                "successful": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                },
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "Expired token"
+                                                },
+                                                "status_code": {
+                                                    "type": "integer",
+                                                    "example": 401
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "User",
+            "description": "User"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "in": "header",
+                "name": "Authorization",
+                "description": "Enter your Bearer token in the format `YOUR_TOKEN`. For example: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...`"
+            }
+        }
+    }
+}
