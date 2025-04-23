@@ -15,7 +15,7 @@ class StoreCreateRequest extends BaseRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'image' => 'nullable|string',
+            'image' => 'nullable|image',
             'address' => 'required|string',
         ];
     }

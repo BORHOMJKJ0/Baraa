@@ -17,11 +17,11 @@ class StoreFactory extends Factory
      */
     public function definition(): array
     {
-            return [
-                'name' => $this->faker->company,
-                'image' => fake()->optional()->imageUrl(640, 480, 'technics', true),
-                'address' => $this->faker->address,
-                'user_id' => User::factory(),
+        return [
+            'name' => $this->faker->company,
+            'image' => fake()->optional()->imageUrl(640, 480, 'technics', true),
+            'address' => $this->faker->address,
+            'user_id' => User::factory(),
         ];
     }
 }

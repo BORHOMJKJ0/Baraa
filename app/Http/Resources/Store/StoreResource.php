@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Store;
 
-use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,12 +14,18 @@ class StoreResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $imageUrl = $this->image
+            ? (str_starts_with($this->image, 'https://via.placeholder.com')
+                ? $this->image
+                : config('app.url').'/storage/'.$this->image)
+            : null;
+
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'image' => $this->image,
+            'image' => $imageUrl,
             'address' => $this->address,
-            'user_id' => UserResource::make($this->user_id),
+            'user' => $this->user->first_name.' '.$this->user->last_name,
         ];
     }
 }

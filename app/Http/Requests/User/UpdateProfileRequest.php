@@ -16,7 +16,7 @@ class UpdateProfileRequest extends BaseRequest
         return [
             'first_name' => 'sometimes|string',
             'last_name' => 'sometimes|string',
-            'location'=> 'sometimes|string',
+            'location' => 'sometimes|string',
             'email' => 'sometimes|unique:users,email,'.$this->user()->email,
         ];
     }

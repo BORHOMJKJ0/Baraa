@@ -130,7 +130,9 @@ class UserController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Email Verified successfully",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=true),
      *             @OA\Property(property="message", type="string", example="Email Verified successfully, You can use the app now"),
      *             @OA\Property(property="data", type="object",
@@ -150,7 +152,9 @@ class UserController extends Controller
      *     @OA\Response(
      *         response=400,
      *         description="Validation failed",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="Validation failed"),
      *             @OA\Property(property="data", type="object",

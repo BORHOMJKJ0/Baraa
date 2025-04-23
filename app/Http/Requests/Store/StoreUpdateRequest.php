@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Store;
 
-
 use App\Http\Requests\BaseRequest;
 
 class StoreUpdateRequest extends BaseRequest
@@ -16,7 +15,7 @@ class StoreUpdateRequest extends BaseRequest
     {
         return [
             'name' => 'sometimes|string|max:255',
-            'image' => 'nullable|string',
+            'image' => 'nullable|image',
             'address' => 'sometimes|string',
         ];
     }

@@ -72,7 +72,6 @@ class UserService
         return ResponseHelper::jsonResponse($data, 'Email Verified successfully, You can use the app now');
     }
 
-
     /**
      * Log in using email and password
      */

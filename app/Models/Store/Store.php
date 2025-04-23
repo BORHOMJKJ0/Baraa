@@ -9,10 +9,16 @@ use Illuminate\Database\Eloquent\Model;
 class Store extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public static function getAllStores($items, $column, $direction)
+    {
+        return self::orderBy($column, $direction)->paginate($items);
     }
 }

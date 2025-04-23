@@ -31,5 +31,8 @@ Route::middleware(['jwt.verify:api', 'email.verify'])->group(function () {
         Route::post('logout', 'logout');
         Route::delete('delete', 'deleteAccount');
     });
+    Route::prefix('stores')->controller(StoreController::class)->group(function () {
+        Route::post('/{store}', 'update');
+    });
     Route::apiResource('stores', StoreController::class);
 });

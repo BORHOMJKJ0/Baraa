@@ -3,11 +3,7 @@
 namespace App\Traits;
 
 use App\Helpers\ResponseHelper;
-use App\Models\Debt\Debt;
-use App\Models\Debtor\Debtor;
-use App\Models\Product\Product;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Support\Facades\DB;
 
 trait AuthTrait
 {
