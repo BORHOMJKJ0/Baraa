@@ -979,7 +979,7 @@
                                         "example": "khlilnoor0@gmail.com"
                                     },
                                     "otp": {
-                                        "type": "string",
+                                        "type": "integer",
                                         "example": "123456"
                                     }
                                 },
@@ -1107,6 +1107,7 @@
                                     },
                                     "password": {
                                         "type": "string",
+                                        "format": "password",
                                         "example": "1234567890"
                                     },
                                     "fcm_token": {
@@ -1137,10 +1138,6 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Logged in successfully"
-                                        },
-                                        "status_code": {
-                                            "type": "integer",
-                                            "example": 200
                                         },
                                         "data": {
                                             "properties": {
@@ -1176,6 +1173,10 @@
                                                 }
                                             },
                                             "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
                                         }
                                     },
                                     "type": "object"
@@ -1221,10 +1222,6 @@
                                             "type": "string",
                                             "example": "Validation failed"
                                         },
-                                        "status_code": {
-                                            "type": "integer",
-                                            "example": 400
-                                        },
                                         "data": {
                                             "properties": {
                                                 "email": {
@@ -1237,6 +1234,10 @@
                                                 }
                                             },
                                             "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 400
                                         }
                                     },
                                     "type": "object"
@@ -1453,7 +1454,7 @@
                     }
                 },
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "Profile updated successfully",
                         "content": {
                             "application/json": {

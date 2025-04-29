@@ -122,7 +122,7 @@ class UserController extends Controller
      *                 required={"email", "otp"},
      *
      *                 @OA\Property(property="email", type="string", example="khlilnoor0@gmail.com"),
-     *                 @OA\Property(property="otp", type="string", example="123456")
+     *                 @OA\Property(property="otp", type="integer", example="123456")
      *             )
      *         )
      *     ),
@@ -188,7 +188,7 @@ class UserController extends Controller
      *                 required={"email", "password"},
      *
      *                 @OA\Property(property="email", type="string", example="khlilnoor0@gmail.com"),
-     *                 @OA\Property(property="password", type="string", example="1234567890"),
+     *                 @OA\Property(property="password", type="string",format="password", example="1234567890"),
      *                 @OA\Property(property="fcm_token", type="string", example="dpTcAzVoQFil-nyJYaTJd7:APA91bGmhBPVV1MtbKFGrYcIqyMaEycdGXPzOgahYSfM3iLaYQTXQGSG5D-YomRDo7-VqvxWsJOYTYYG3Ae_btPHnZZ_b6XoNahkdo7B5bO4sk-I6AeP7_Q"),
      *                 @OA\Property(property="remember_me", type="boolean", example=true)
      *             )
@@ -203,7 +203,6 @@ class UserController extends Controller
      *
      *             @OA\Property(property="successful", type="boolean", example=true),
      *             @OA\Property(property="message", type="string", example="Logged in successfully"),
-     *             @OA\Property(property="status_code", type="integer", example=200),
      *             @OA\Property(property="data", type="object",
      *                 @OA\Property(property="user", type="object",
      *                     @OA\Property(property="first_name", type="string", example="Omar"),
@@ -212,8 +211,10 @@ class UserController extends Controller
      *                       @OA\Property(property="location", type="string", example="Damascus"),
      *                     @OA\Property(property="image", type="string", format="url", example="http://127.0.0.1:8000/storage/images/tfg43fGPSvMYQ3AGZsJFtYTrqCxibGHSiaRSaZpk.png")
      *                 ),
-     *                 @OA\Property(property="token", type="string", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...")
-     *             )
+     *                 @OA\Property(property="token", type="string", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."),
+     *             ),
+     *             @OA\Property(property="status_code", type="integer", example=200),
+     *
      *         )
      *     ),
      *
@@ -237,11 +238,11 @@ class UserController extends Controller
      *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="Validation failed"),
-     *             @OA\Property(property="status_code", type="integer", example=400),
      *             @OA\Property(property="data", type="object",
      *                 @OA\Property(property="email", type="string", example="The selected email is invalid."),
      *                 @OA\Property(property="remember_me", type="string", example="The selected remember me is invalid.")
-     *             )
+     *             ),
+     *              @OA\Property(property="status_code", type="integer", example=400),
      *         )
      *     )
      * )
@@ -368,7 +369,7 @@ class UserController extends Controller
      *     ),
      *
      *     @OA\Response(
-     *         response=200,
+     *         response=201,
      *         description="Profile updated successfully",
      *
      *         @OA\JsonContent(

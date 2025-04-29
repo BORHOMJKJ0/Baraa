@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 class StoreController extends Controller
 {
     public function __construct(protected StoreService $storeService) {}
+
     /**
      * @OA\SecurityScheme(
      *     securityScheme="bearerAuth",
@@ -28,38 +29,49 @@ class StoreController extends Controller
      *     tags={"Store"},
      *     summary="Retrieve all stores with pagination and sorting",
      *     security={{"bearerAuth":{}}},
+     *
      *     @OA\Parameter(
      *         name="page",
      *         in="query",
      *         required=false,
      *         description="Page number",
+     *
      *         @OA\Schema(type="integer", example=1)
      *     ),
+     *
      *     @OA\Parameter(
      *         name="items",
      *         in="query",
      *         required=false,
      *         description="Number of items per page",
+     *
      *         @OA\Schema(type="integer", example=5)
      *     ),
+     *
      *     @OA\Parameter(
      *         name="direction",
      *         in="query",
      *         required=false,
      *         description="Sorting direction (asc or desc)",
+     *
      *         @OA\Schema(type="string", enum={"asc", "desc"}, example="asc")
      *     ),
+     *
      *     @OA\Parameter(
      *         name="column",
      *         in="query",
      *         required=false,
      *         description="Column to sort by (name, address, created_at, updated_at)",
+     *
      *         @OA\Schema(type="string", enum={"name", "address", "created_at", "updated_at"}, example="name")
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Stores retrieved successfully",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=true),
      *             @OA\Property(property="message", type="string", example="Stores retrieved successfully"),
      *             @OA\Property(property="status_code", type="integer", example=200),
@@ -69,8 +81,10 @@ class StoreController extends Controller
      *                 @OA\Property(
      *                     property="Stores",
      *                     type="array",
+     *
      *                     @OA\Items(
      *                         type="object",
+     *
      *                         @OA\Property(property="id", type="integer", example=10),
      *                         @OA\Property(property="name", type="string", example="Dietrich and Sons"),
      *                         @OA\Property(property="image", type="string", example="https://via.placeholder.com/640x480.png/0033ff?text=technics+sit"),
@@ -84,55 +98,67 @@ class StoreController extends Controller
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthenticated",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="Unauthenticated"),
      *             @OA\Property(property="status_code", type="integer", example=401)
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=400,
      *         description="Invalid sort column or direction. Allowed columns: name, address, created_at, updated_at. Allowed directions: asc, desc.",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="Invalid sort column or direction. Allowed columns: name, address, created_at, updated_at. Allowed directions: asc, desc."),
      *             @OA\Property(property="status_code", type="integer", example=400)
      *         )
      *     ),
      *  )
-     *
      */
-
     public function index(Request $request): JsonResponse
     {
         return $this->storeService->getAllStores($request);
     }
+
     /**
      * @OA\Post(
      *     path="/stores",
      *     tags={"Store"},
      *     summary="Create a new store",
      *     security={{"bearerAuth":{}}},
+     *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
+     *
      *             @OA\Schema(
      *                 type="object",
      *                 required={"name", "address"},
+     *
      *                 @OA\Property(property="name", type="string", example="Abo Bashir"),
      *                 @OA\Property(property="address", type="string", example="Damascus"),
      *                 @OA\Property(property="image", type="string", format="binary", nullable=true, example="Rp6d5o65aGlNo95BedbGJdC9whgIEfp6U2zw0Ck1.png")
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=201,
      *         description="Store created successfully",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=true),
      *             @OA\Property(property="message", type="string", example="Store created successfully!"),
      *             @OA\Property(property="status_code", type="integer", example=201),
@@ -151,10 +177,13 @@ class StoreController extends Controller
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=400,
      *         description="Validation failed",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="Validation failed"),
      *             @OA\Property(property="status_code", type="integer", example=400),
@@ -166,19 +195,25 @@ class StoreController extends Controller
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthenticated",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="Unauthenticated"),
      *             @OA\Property(property="status_code", type="integer", example=401)
      *         )
      *     ),
+     *
      *          @OA\Response(
      *          response=404,
      *          description="Store Not Found",
+     *
      *          @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *              @OA\Property(property="message", type="string", example="Store Not Found"),
      *              @OA\Property(property="status_code", type="integer", example=404)
@@ -186,28 +221,33 @@ class StoreController extends Controller
      *      )
      * )
      */
-
     public function store(StoreCreateRequest $request): JsonResponse
     {
         return $this->storeService->createStore($request->validated(), $request);
     }
+
     /**
      * @OA\Get(
      *     path="/api/stores/{id}",
      *     tags={"Store"},
      *     summary="Retrieve a specific store by ID",
      *     security={{"bearerAuth":{}}},
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         description="ID of the store to retrieve",
      *         required=true,
+     *
      *         @OA\Schema(type="integer" , example=12)
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Store retrieved successfully",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=true),
      *             @OA\Property(property="message", type="string", example="Store retrieved successfully!"),
      *             @OA\Property(property="status_code", type="integer", example=200),
@@ -226,10 +266,13 @@ class StoreController extends Controller
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthenticated",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="Unauthenticated"),
      *             @OA\Property(property="status_code", type="integer", example=401)
@@ -237,40 +280,49 @@ class StoreController extends Controller
      *     )
      * )
      */
-
     public function show(Store $store): JsonResponse
     {
         return $this->storeService->getStoreById($store);
     }
+
     /**
      * @OA\Post(
      *     path="/stores/{id}",
      *     tags={"Store"},
      *     summary="Update an existing store",
      *     security={{"bearerAuth":{}}},
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         description="The ID of the store to be updated",
      *         required=true,
+     *
      *         @OA\Schema(type="integer", example=12)
      *     ),
+     *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
+     *
      *             @OA\Schema(
      *                 type="object",
+     *
      *                 @OA\Property(property="name", type="string", example="Osuama"),
      *                 @OA\Property(property="address", type="string", example="Midan"),
      *                 @OA\Property(property="image", type="string", format="binary", nullable=true, example="new_image.png")
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Store updated successfully",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=true),
      *             @OA\Property(property="message", type="string", example="Store updated successfully!"),
      *             @OA\Property(property="status_code", type="integer", example=200),
@@ -289,28 +341,37 @@ class StoreController extends Controller
      *             )
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthenticated",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="Unauthenticated"),
      *             @OA\Property(property="status_code", type="integer", example=401)
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=403,
      *         description="You are not authorized to update this Store",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="You are not authorized to update this Store."),
      *             @OA\Property(property="status_code", type="integer", example=403)
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Store Not Found",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="Store Not Found"),
      *             @OA\Property(property="status_code", type="integer", example=404)
@@ -322,50 +383,65 @@ class StoreController extends Controller
     {
         return $this->storeService->updateStore($store, $request->validated());
     }
+
     /**
      * @OA\Delete(
      *     path="/stores/{id}",
      *     tags={"Store"},
      *     summary="Delete a store",
      *     security={{"bearerAuth":{}}},
+     *
      *     @OA\Parameter(
      *         name="id",
      *         in="path",
      *         description="The ID of the store to be deleted",
      *         required=true,
+     *
      *         @OA\Schema(type="integer", example=12)
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Store deleted successfully",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=true),
      *             @OA\Property(property="message", type="string", example="Store deleted successfully!"),
      *             @OA\Property(property="status_code", type="integer", example=200)
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthenticated",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="Unauthenticated"),
      *             @OA\Property(property="status_code", type="integer", example=401)
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=403,
      *         description="You are not authorized to delete this Store",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="You are not authorized to delete this Store."),
      *             @OA\Property(property="status_code", type="integer", example=403)
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Store Not Found",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="Store Not Found"),
      *             @OA\Property(property="status_code", type="integer", example=404)
@@ -373,7 +449,6 @@ class StoreController extends Controller
      *     )
      * )
      */
-
     public function destroy(Store $store): JsonResponse
     {
         return $this->storeService->deleteStore($store);
