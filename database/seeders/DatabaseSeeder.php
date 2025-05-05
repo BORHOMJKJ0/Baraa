@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Category\CategorySeeder;
 use Database\Seeders\Store\StoreSeeder;
 use Database\Seeders\User\UserSeeder;
 use Illuminate\Database\Seeder;
@@ -14,6 +15,7 @@ class DatabaseSeeder extends Seeder
         DB::transaction(function () {
             $this->call([
                 UserSeeder::class,
+                CategorySeeder::class,
                 StoreSeeder::class,
             ]);
         });

@@ -89,7 +89,7 @@ class StoreController extends Controller
      *                         @OA\Property(property="name", type="string", example="Dietrich and Sons"),
      *                         @OA\Property(property="image", type="string", example="https://via.placeholder.com/640x480.png/0033ff?text=technics+sit"),
      *                         @OA\Property(property="address", type="string", example="21464 Ortiz Pines\nEast Ethelton, MO 97340"),
-     *                         @OA\Property(property="user", type="string", example="Miguel Douglas")
+     *                         @OA\Property(property="category", type="string", example="fruits")
      *                     )
      *                 ),
      *                 @OA\Property(property="total_pages", type="integer", example=3),
@@ -144,11 +144,12 @@ class StoreController extends Controller
      *
      *             @OA\Schema(
      *                 type="object",
-     *                 required={"name", "address"},
+     *                 required={"name", "address","category_id"},
      *
      *                 @OA\Property(property="name", type="string", example="Abo Bashir"),
      *                 @OA\Property(property="address", type="string", example="Damascus"),
-     *                 @OA\Property(property="image", type="string", format="binary", nullable=true, example="Rp6d5o65aGlNo95BedbGJdC9whgIEfp6U2zw0Ck1.png")
+     *                 @OA\Property(property="image", type="string", format="binary", nullable=true, example="Rp6d5o65aGlNo95BedbGJdC9whgIEfp6U2zw0Ck1.png"),
+     *                 @OA\Property(property="category_id", type="int", example=1),
      *             )
      *         )
      *     ),
@@ -172,7 +173,7 @@ class StoreController extends Controller
      *                     @OA\Property(property="name", type="string", example="Abo Bashir"),
      *                     @OA\Property(property="image", type="string", example="http://127.0.0.1:8000/storage/images/Rp6d5o65aGlNo95BedbGJdC9whgIEfp6U2zw0Ck1.png"),
      *                     @OA\Property(property="address", type="string", example="Damascus"),
-     *                     @OA\Property(property="user", type="string", example="Abood Sarhan")
+     *                     @OA\Property(property="category", type="string", example="fruits")
      *                 )
      *             )
      *         )
@@ -191,7 +192,8 @@ class StoreController extends Controller
      *                 property="data",
      *                 type="object",
      *                 @OA\Property(property="name", type="string", example="The name field is required."),
-     *                 @OA\Property(property="address", type="string", example="The address field is required.")
+     *                 @OA\Property(property="address", type="string", example="The address field is required."),
+     *                 @OA\Property(property="category_id", type="string", example="The selected category is invalid.")
      *             )
      *         )
      *     ),
@@ -261,7 +263,7 @@ class StoreController extends Controller
      *                     @OA\Property(property="name", type="string", example="Dietrich and Sons"),
      *                     @OA\Property(property="image", type="string", example="https://via.placeholder.com/640x480.png/0033ff?text=technics+sit"),
      *                     @OA\Property(property="address", type="string", example="21464 Ortiz Pines\nEast Ethelton, MO 97340"),
-     *                     @OA\Property(property="user", type="string", example="Miguel Douglas")
+     *                     @OA\Property(property="category", type="string", example="fruits")
      *                 )
      *             )
      *         )
@@ -312,7 +314,8 @@ class StoreController extends Controller
      *
      *                 @OA\Property(property="name", type="string", example="Osuama"),
      *                 @OA\Property(property="address", type="string", example="Midan"),
-     *                 @OA\Property(property="image", type="string", format="binary", nullable=true, example="new_image.png")
+     *                 @OA\Property(property="image", type="string", format="binary", nullable=true, example="new_image.png"),
+     *                 @OA\Property(property="category_id", type="int", example="1.")
      *             )
      *         )
      *     ),
@@ -336,7 +339,7 @@ class StoreController extends Controller
      *                     @OA\Property(property="name", type="string", example="Osuama"),
      *                     @OA\Property(property="image", type="string", example="http://127.0.0.1:8000/storage/images/qRERai5pFIvaN2SfoItlFqRUjlPseUwWqdnoiSsd.png"),
      *                     @OA\Property(property="address", type="string", example="Midan"),
-     *                     @OA\Property(property="user", type="string", example="Abood Sarhan")
+     *                     @OA\Property(property="category", type="string", example="vegetables")
      *                 )
      *             )
      *         )

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Store;
+namespace App\Http\Requests\Category;
 
 use App\Http\Requests\BaseRequest;
 
-class StoreCreateRequest extends BaseRequest
+class CategoryCreateRequest extends BaseRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     public function rules(): array
@@ -16,8 +16,6 @@ class StoreCreateRequest extends BaseRequest
         return [
             'name' => 'required|string|max:255',
             'image' => 'nullable|image',
-            'address' => 'required|string',
-            'category_id' => 'required|exists:categories,id',
         ];
     }
 }

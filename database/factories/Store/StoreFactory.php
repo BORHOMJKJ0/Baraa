@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Store;
 
+use App\Models\Category\Category;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,6 +23,7 @@ class StoreFactory extends Factory
             'image' => fake()->optional()->imageUrl(640, 480, 'technics', true),
             'address' => $this->faker->address,
             'user_id' => User::factory(),
+            'category_id' => Category::factory(),
         ];
     }
 }

@@ -18,6 +18,385 @@
         }
     ],
     "paths": {
+        "/api/categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get list of categories",
+                "description": "Retrieve a paginated list of categories with optional sorting and pagination.",
+                "operationId": "4217660caec9cd97efc29e9918fb2e40",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "items",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 5
+                        }
+                    },
+                    {
+                        "name": "direction",
+                        "in": "query",
+                        "description": "Sorting direction (asc or desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "example": "asc"
+                        }
+                    },
+                    {
+                        "name": "column",
+                        "in": "query",
+                        "description": "Column to sort by (name, created_at, updated_at)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "name",
+                                "created_at",
+                                "updated_at"
+                            ],
+                            "example": "name"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Categories retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Categories retrieved successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "Categories": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 3
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "blanditiis"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "total_pages": {
+                                                    "type": "integer",
+                                                    "example": 4
+                                                },
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "hasMorePages": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid sort column or direction. Allowed columns: name, created_at, updated_at. Allowed directions: asc, desc.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid sort column or direction. Allowed columns: name, created_at, updated_at. Allowed directions: asc, desc."
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 400
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 401
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/categories/{id}": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get category and its stores",
+                "description": "Returns a category with a paginated list of stores for that category.",
+                "operationId": "getCategoryAndStores",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the category",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 12
+                        }
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "Column to sort by (name, address, created_at, updated_at)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "name",
+                                "address",
+                                "created_at",
+                                "updated_at"
+                            ],
+                            "example": "name"
+                        }
+                    },
+                    {
+                        "name": "order_direction",
+                        "in": "query",
+                        "description": "Sorting direction (asc or desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "example": "asc"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of stores per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 2
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Category and stores retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Category retrieved successfully!"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "category": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 12
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "ut"
+                                                        },
+                                                        "stores": {
+                                                            "properties": {
+                                                                "data": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer",
+                                                                                "example": 11
+                                                                            },
+                                                                            "name": {
+                                                                                "type": "string",
+                                                                                "example": "Abo Bashir"
+                                                                            },
+                                                                            "image": {
+                                                                                "type": "string",
+                                                                                "example": "http://127.0.0.1:8000/storage/images/E5eNfLzqAhGhTaUwTgDPhHJGRKTVxSX5iEU1weyd.png",
+                                                                                "nullable": true
+                                                                            },
+                                                                            "address": {
+                                                                                "type": "string",
+                                                                                "example": "Damascus"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                },
+                                                                "pagination": {
+                                                                    "properties": {
+                                                                        "total_pages": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "current_page": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "hasMorePages": {
+                                                                            "type": "boolean",
+                                                                            "example": false
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Category not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Category not found"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 404
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 401
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/stores": {
             "get": {
                 "tags": [
@@ -118,9 +497,9 @@
                                                                 "type": "string",
                                                                 "example": "21464 Ortiz Pines\\nEast Ethelton, MO 97340"
                                                             },
-                                                            "user": {
+                                                            "category": {
                                                                 "type": "string",
-                                                                "example": "Miguel Douglas"
+                                                                "example": "fruits"
                                                             }
                                                         },
                                                         "type": "object"
@@ -215,7 +594,8 @@
                             "schema": {
                                 "required": [
                                     "name",
-                                    "address"
+                                    "address",
+                                    "category_id"
                                 ],
                                 "properties": {
                                     "name": {
@@ -231,6 +611,10 @@
                                         "format": "binary",
                                         "example": "Rp6d5o65aGlNo95BedbGJdC9whgIEfp6U2zw0Ck1.png",
                                         "nullable": true
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "example": 1
                                     }
                                 },
                                 "type": "object"
@@ -277,9 +661,9 @@
                                                             "type": "string",
                                                             "example": "Damascus"
                                                         },
-                                                        "user": {
+                                                        "category": {
                                                             "type": "string",
-                                                            "example": "Abood Sarhan"
+                                                            "example": "fruits"
                                                         }
                                                     },
                                                     "type": "object"
@@ -320,6 +704,10 @@
                                                 "address": {
                                                     "type": "string",
                                                     "example": "The address field is required."
+                                                },
+                                                "category_id": {
+                                                    "type": "string",
+                                                    "example": "The selected category is invalid."
                                                 }
                                             },
                                             "type": "object"
@@ -444,9 +832,9 @@
                                                             "type": "string",
                                                             "example": "21464 Ortiz Pines\\nEast Ethelton, MO 97340"
                                                         },
-                                                        "user": {
+                                                        "category": {
                                                             "type": "string",
-                                                            "example": "Miguel Douglas"
+                                                            "example": "fruits"
                                                         }
                                                     },
                                                     "type": "object"
@@ -530,6 +918,10 @@
                                         "format": "binary",
                                         "example": "new_image.png",
                                         "nullable": true
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "example": "1."
                                     }
                                 },
                                 "type": "object"
@@ -576,9 +968,9 @@
                                                             "type": "string",
                                                             "example": "Midan"
                                                         },
-                                                        "user": {
+                                                        "category": {
                                                             "type": "string",
-                                                            "example": "Abood Sarhan"
+                                                            "example": "vegetables"
                                                         }
                                                     },
                                                     "type": "object"
@@ -2063,6 +2455,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Categories",
+            "description": "Categories"
+        },
         {
             "name": "Store",
             "description": "Store"
