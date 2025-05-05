@@ -29,7 +29,7 @@ class CategoryResource extends JsonResource
             }
 
             $stores = $query->paginate($request->query('per_page', 20));
-            $Stores=StoreResource::collection($stores);
+            $Stores = StoreResource::collection($stores);
             $data['stores'] = [
                 'data' => StoreResource::collection($stores),
                 'pagination' => [

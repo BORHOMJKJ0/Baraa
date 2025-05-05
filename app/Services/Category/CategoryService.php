@@ -81,6 +81,8 @@ class CategoryService
                 $path = $data['image']->store('images', 'public');
                 $data['image'] = $path;
             }
+            $this->checkOwnership($category, 'Category', 'update', 'stores', 'Stores');
+            $this->checkProduct($category, 'Category', 'update');
             $category = $this->categoryRepository->update($category, $data);
             $data = [
                 'Category' => CategoryResource::make($category),

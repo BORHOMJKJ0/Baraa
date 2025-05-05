@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Store;
 
-use App\Http\Resources\Category\CategoryResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,15 +20,16 @@ class StoreResource extends JsonResource
                 : config('app.url').'/storage/'.$this->image)
             : null;
 
-        $data= [
+        $data = [
             'id' => $this->id,
             'name' => $this->name,
             'image' => $imageUrl,
             'address' => $this->address,
-            ];
-        if (!$request->routeIs('categories.show')) {
+        ];
+        if (! $request->routeIs('categories.show')) {
             $data['category'] = $this->category->name;
         }
+
         return $data;
     }
 }

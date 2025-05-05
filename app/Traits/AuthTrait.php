@@ -25,8 +25,9 @@ trait AuthTrait
                 403, false));
         }
     }
+
     public function checkProduct($model, $modelType, $action)
-{
+    {
         $hasProducts = Store::where('category_id', $model->id)->exists();
 
         $userHasStoreInCategory = Store::where('category_id', $model->id)
@@ -43,7 +44,7 @@ trait AuthTrait
                 ));
             }
         }
-        if ($hasProducts && !$userHasStoreInCategory && $action == 'update') {
+        if ($hasProducts && ! $userHasStoreInCategory && $action == 'update') {
             throw new HttpResponseException(ResponseHelper::jsonResponse(
                 [],
                 "You are not authorized to {$action} this {$modelType}. You must have products in this category.",

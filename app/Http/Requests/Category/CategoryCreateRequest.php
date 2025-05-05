@@ -8,13 +8,13 @@ class CategoryCreateRequest extends BaseRequest
 {
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:categories,name',
             'image' => 'nullable|image',
         ];
     }
