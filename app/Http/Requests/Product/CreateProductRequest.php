@@ -24,9 +24,9 @@ class CreateProductRequest extends BaseRequest
         return [
             'name' => 'required|string|max:255',
             'image' => 'nullable|image',
-            'amount'=> 'required|integer|min:1',
-            'price'=>'required|double|min:1',
-            'store_id'=>'required|exists:stores,id',
+            'amount' => 'required|integer|min:1',
+            'price' => 'required|double|min:1',
+            'store_id' => 'required|exists:stores,id',
         ];
     }
 }

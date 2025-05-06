@@ -82,7 +82,8 @@ class CategoryController extends Controller
      *                       type="object",
      *
      *                        @OA\Property(property="id", type="integer", example=3),
-     *                       @OA\Property(property="name", type="string", example="blanditiis")
+     *                       @OA\Property(property="name", type="string", example="blanditiis"),
+     *                          @OA\Property(property="image", type="string", example="http://127.0.0.1:8000/storage/images/qRERai5pFIvaN2SfoItlFqRUjlPseUwWqdnoiSsd.png"),
      *                    )
      *                ),
      *                @OA\Property(property="total_pages", type="integer", example=4),
@@ -179,6 +180,7 @@ class CategoryController extends Controller
      *                 @OA\Property(property="category", type="object",
      *                     @OA\Property(property="id", type="integer", example=12),
      *                     @OA\Property(property="name", type="string", example="ut"),
+     *                          @OA\Property(property="image", type="string", example="http://127.0.0.1:8000/storage/images/qRERai5pFIvaN2SfoItlFqRUjlPseUwWqdnoiSsd.png"),
      *                     @OA\Property(property="stores", type="object",
      *                         @OA\Property(property="data", type="array",
      *
@@ -231,6 +233,7 @@ class CategoryController extends Controller
     {
         return $this->categoryService->getCategoryById($category);
     }
+
     /**
      * @OA\Post(
      *     path="/categories",
@@ -241,11 +244,14 @@ class CategoryController extends Controller
      *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
+     *
      *             @OA\Schema(
      *                 type="object",
      *                 required={"name"},
+     *
      *                 @OA\Property(
      *                     property="name",
      *                     type="string",
@@ -265,13 +271,16 @@ class CategoryController extends Controller
      *     @OA\Response(
      *         response=201,
      *         description="Category created successfully",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=true),
      *             @OA\Property(property="message", type="string", example="Category created successfully!"),
      *             @OA\Property(property="data", type="object",
      *                 @OA\Property(property="Category", type="object",
      *                     @OA\Property(property="id", type="integer", example=21),
-     *                     @OA\Property(property="name", type="string", example="Abo Bashir")
+     *                     @OA\Property(property="name", type="string", example="Abo Bashir"),
+     *                          @OA\Property(property="image", type="string", example="http://127.0.0.1:8000/storage/images/qRERai5pFIvaN2SfoItlFqRUjlPseUwWqdnoiSsd.png"),
      *                 )
      *             ),
      *             @OA\Property(property="status_code", type="integer", example=201)
@@ -281,7 +290,9 @@ class CategoryController extends Controller
      *     @OA\Response(
      *         response=400,
      *         description="Validation failed",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="Validation failed"),
      *             @OA\Property(property="data", type="object",
@@ -294,7 +305,9 @@ class CategoryController extends Controller
      *     @OA\Response(
      *         response=401,
      *         description="Unauthenticated",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="Unauthenticated"),
      *             @OA\Property(property="status_code", type="integer", example=401)
@@ -302,11 +315,11 @@ class CategoryController extends Controller
      *     )
      * )
      */
-
     public function store(CategoryCreateRequest $request): JsonResponse
     {
         return $this->categoryService->createCategory($request->validated(), $request);
     }
+
     /**
      * @OA\Post(
      *     path="/categories/{id}",
@@ -320,15 +333,19 @@ class CategoryController extends Controller
      *         in="path",
      *         required=true,
      *         description="ID of the category to update",
+     *
      *         @OA\Schema(type="integer", example=12)
      *     ),
      *
      *     @OA\RequestBody(
      *         required=true,
+     *
      *         @OA\MediaType(
      *             mediaType="multipart/form-data",
+     *
      *             @OA\Schema(
      *                 type="object",
+     *
      *                 @OA\Property(
      *                     property="name",
      *                     type="string",
@@ -345,16 +362,20 @@ class CategoryController extends Controller
      *         )
      *     ),
 
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Category updated successfully",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=true),
      *             @OA\Property(property="message", type="string", example="Category updated successfully!"),
      *             @OA\Property(property="data", type="object",
      *                 @OA\Property(property="Category", type="object",
      *                     @OA\Property(property="id", type="integer", example=12),
-     *                     @OA\Property(property="name", type="string", example="Vegetables")
+     *                     @OA\Property(property="name", type="string", example="Vegetables"),
+     *                          @OA\Property(property="image", type="string", example="http://127.0.0.1:8000/storage/images/qRERai5pFIvaN2SfoItlFqRUjlPseUwWqdnoiSsd.png"),
      *                 )
      *             ),
      *             @OA\Property(property="status_code", type="integer", example=200)
@@ -364,26 +385,34 @@ class CategoryController extends Controller
      *      @OA\Response(
      *          response=403,
      *          description="Unauthorized to update - category has associated stores",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="successful", type="boolean", example=false),
      *              @OA\Property(property="message", type="string", example="You are not authorized to update this Category. It has associated Stores."),
      *              @OA\Property(property="status_code", type="integer", example=403)
      *          )
      *      ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Category not found",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="Category not found"),
      *             @OA\Property(property="status_code", type="integer", example=404)
      *         )
      *     ),
 
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthenticated",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="Unauthenticated"),
      *             @OA\Property(property="status_code", type="integer", example=401)
@@ -391,11 +420,11 @@ class CategoryController extends Controller
      *     )
      * )
      */
-
     public function update(CategoryUpdateRequest $request, Category $category): JsonResponse
     {
         return $this->categoryService->updateCategory($category, $request->validated());
     }
+
     /**
      * @OA\Delete(
      *     path="/categories/{id}",
@@ -409,21 +438,28 @@ class CategoryController extends Controller
      *         in="path",
      *         required=true,
      *         description="ID of the category to delete",
+     *
      *         @OA\Schema(type="integer", example=12)
      *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Category deleted successfully",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=true),
      *             @OA\Property(property="message", type="string", example="Category deleted successfully!"),
      *             @OA\Property(property="status_code", type="integer", example=200)
      *         )
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Category not found",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="Category not found"),
      *             @OA\Property(property="status_code", type="integer", example=404)
@@ -433,16 +469,21 @@ class CategoryController extends Controller
      *      @OA\Response(
      *          response=403,
      *          description="Unauthorized to delete - category has associated stores",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(property="successful", type="boolean", example=false),
      *              @OA\Property(property="message", type="string", example="You are not authorized to delete this Category. It has associated Stores."),
      *              @OA\Property(property="status_code", type="integer", example=403)
      *          )
      *      ),
+     *
      *     @OA\Response(
      *         response=401,
      *         description="Unauthenticated",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="Unauthenticated"),
      *             @OA\Property(property="status_code", type="integer", example=401)
@@ -450,7 +491,6 @@ class CategoryController extends Controller
      *     )
      * )
      */
-
     public function destroy(Category $category): JsonResponse
     {
         return $this->categoryService->deleteCategory($category);

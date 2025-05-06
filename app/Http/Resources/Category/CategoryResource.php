@@ -10,9 +10,15 @@ class CategoryResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
+        $imageUrl = $this->image
+            ? (str_starts_with($this->image, 'https://via.placeholder.com')
+                ? $this->image
+                : config('app.url').'/storage/'.$this->image)
+            : null;
         $data = [
             'id' => $this->id,
             'name' => $this->name,
+            'image' => $imageUrl,
         ];
         if ($request->routeIs('categories.show')) {
             $validColumns = ['name', 'address', 'created_at', 'updated_at'];

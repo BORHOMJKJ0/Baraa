@@ -20,9 +20,9 @@ class ProductFactory extends Factory
         return [
             'name' => $this->faker->company,
             'image' => fake()->optional()->imageUrl(640, 480, 'apple', true),
-            'price'=>$this->faker->randomFloat(2,1,1000),
-            'amount'=>$this->faker->randomDigitNotZero(),
-            'store_id'=>Store::factory(),
+            'price' => $this->faker->randomFloat(2, 1, 1000),
+            'amount' => $this->faker->randomDigitNotZero(),
+            'store_id' => Store::factory(),
         ];
     }
 }

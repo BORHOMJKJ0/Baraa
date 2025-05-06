@@ -105,6 +105,10 @@
                                                             "name": {
                                                                 "type": "string",
                                                                 "example": "blanditiis"
+                                                            },
+                                                            "image": {
+                                                                "type": "string",
+                                                                "example": "http://127.0.0.1:8000/storage/images/qRERai5pFIvaN2SfoItlFqRUjlPseUwWqdnoiSsd.png"
                                                             }
                                                         },
                                                         "type": "object"
@@ -248,6 +252,10 @@
                                                         "name": {
                                                             "type": "string",
                                                             "example": "Abo Bashir"
+                                                        },
+                                                        "image": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/storage/images/qRERai5pFIvaN2SfoItlFqRUjlPseUwWqdnoiSsd.png"
                                                         }
                                                     },
                                                     "type": "object"
@@ -416,6 +424,10 @@
                                                         "name": {
                                                             "type": "string",
                                                             "example": "ut"
+                                                        },
+                                                        "image": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/storage/images/qRERai5pFIvaN2SfoItlFqRUjlPseUwWqdnoiSsd.png"
                                                         },
                                                         "stores": {
                                                             "properties": {
@@ -602,6 +614,10 @@
                                                         "name": {
                                                             "type": "string",
                                                             "example": "Vegetables"
+                                                        },
+                                                        "image": {
+                                                            "type": "string",
+                                                            "example": "http://127.0.0.1:8000/storage/images/qRERai5pFIvaN2SfoItlFqRUjlPseUwWqdnoiSsd.png"
                                                         }
                                                     },
                                                     "type": "object"
