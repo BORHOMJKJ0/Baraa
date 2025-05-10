@@ -28,26 +28,26 @@ trait AuthTrait
 
     public function checkProduct($model, $modelType, $action)
     {
-        $hasProducts = Store::where('category_id', $model->id)->exists();
-
-        $userHasStoreInCategory = Store::where('category_id', $model->id)
-            ->where('user_id', auth()->id())
-            ->exists();
-        if ($action == 'delete' && $hasProducts) {
-            $productNotOwnedByUser = Store::where('category_id', $model->id)->where('user_id', '!=', auth()->id())->exists();
-            if ($productNotOwnedByUser) {
-                throw new HttpResponseException(ResponseHelper::jsonResponse(
-                    [],
-                    "You are not authorized to {$action} this {$modelType}. This category have product from other users.",
-                    403,
-                    false
-                ));
-            }
-        }
-        if ($hasProducts && ! $userHasStoreInCategory && $action == 'update') {
+        if ($product->store->user_id !== auth()->id()) {
             throw new HttpResponseException(ResponseHelper::jsonResponse(
                 [],
-                "You are not authorized to {$action} this {$modelType}. You must have products in this category.",
+                "You are not authorized to {$action} this {$modelType}.This Product not in your Store ",
+                403,
+                false
+            ));
+        }
+    }
+
+    public function checkStoreID($storeId, $modelType, $action)
+    {
+        $store = Store::where('id', $storeId)
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if (! $store) {
+            throw new HttpResponseException(ResponseHelper::jsonResponse(
+                [],
+                "You are not authorized to {$action} this {$modelType}. This store does not belong to you.",
                 403,
                 false
             ));

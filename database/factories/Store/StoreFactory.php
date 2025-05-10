@@ -22,8 +22,8 @@ class StoreFactory extends Factory
             'name' => $this->faker->company,
             'image' => fake()->optional()->imageUrl(640, 480, 'technics', true),
             'address' => $this->faker->address,
-            'user_id' => User::factory(),
-            'category_id' => Category::factory(),
+            'user_id' => User::inRandomOrder()->value('id'),
+            'category_id' => Category::inRandomOrder()->value('id'),
         ];
     }
 }

@@ -1,0 +1,18 @@
+{
+    "sourceFile": "app/Models/Product/Product.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1746894939312,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1746894939312,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Models\\Product;\n\nuse App\\Models\\Store\\Store;\nuse Illuminate\\Database\\Eloquent\\Factories\\HasFactory;\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass Product extends Model\n{\n    use HasFactory;\n    protected $guarded = [];\n\n    public $timestamps = false;\n\n    public function store()\n    {\n        return $this->belongsTo(Store::class);\n\n    }\n\n    public static function getAllProducts($items, $column, $direction)\n    {\n        return self::orderBy($column, $direction)->paginate($items);\n    }\n}"
+        }
+    ]
+}

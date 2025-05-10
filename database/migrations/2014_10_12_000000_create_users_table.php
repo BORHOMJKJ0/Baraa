@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('fcm_token')->nullable();
             $table->rememberToken();
-            $table->timestamps();
         });
     }
 

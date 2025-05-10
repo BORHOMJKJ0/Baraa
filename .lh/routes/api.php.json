@@ -1,0 +1,18 @@
+{
+    "sourceFile": "routes/api.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1746895125965,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1746895125965,
+            "name": "Commit-0",
+            "content": "<?php\n\nuse App\\Http\\Controllers\\Category\\CategoryController;\nuse App\\Http\\Controllers\\Product\\ProductController;\nuse App\\Http\\Controllers\\Store\\StoreController;\nuse App\\Http\\Controllers\\User\\UserController;\nuse Illuminate\\Support\\Facades\\Route;\n\n/*\n|--------------------------------------------------------------------------\n| API Routes\n|--------------------------------------------------------------------------\n|\n| Here is where you can register API routes for your application. These\n| routes are loaded by the RouteServiceProvider and all of them will\n| be assigned to the \"api\" middleware group. Make something great!\n|\n*/\n\nRoute::prefix('users')->controller(UserController::class)->group(function () {\n    Route::post('register', 'register');\n    Route::post('emailVerify', 'emailVerify');\n    Route::post('resendOTP', 'resendOTP');\n    Route::post('refreshToken', 'refreshToken');\n    Route::post('login', 'login');\n    Route::post('forgetPassword', 'forgetPassword');\n    Route::post('resetPassword', 'resetPassword');\n});\nRoute::middleware(['jwt.verify:api', 'email.verify'])->group(function () {\n    Route::prefix('users')->controller(UserController::class)->group(function () {\n        Route::get('profile', 'getProfile');\n        Route::post('update', 'updateProfile');\n        Route::post('logout', 'logout');\n        Route::delete('delete', 'deleteAccount');\n    });\n    Route::prefix('stores')->controller(StoreController::class)->group(function () {\n        Route::post('/{store}', 'update');\n    });\n    Route::prefix('categories')->controller(CategoryController::class)->group(function () {\n        Route::post('/{category}', 'update');\n    });\n    Route::prefix('products')->controller(\n        Controller::class)->group(function () {\n        Route::post('/{product}', 'update');\n    });\n    Route::apiResource('stores', StoreController::class);\n    Route::apiResource('categories', CategoryController::class);\n    Route::apiResource('products', ProductController::class);\n});"
+        }
+    ]
+}

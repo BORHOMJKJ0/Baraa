@@ -1,0 +1,26 @@
+{
+    "sourceFile": "app/Http/Requests/Product/UpdateProductRequest.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 2,
+            "patches": [
+                {
+                    "date": 1746894711882,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1746894719388,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n use App\\Http\\Requests\\BaseRequest;\n \n class UpdateProductRequest extends BaseRequest\n-{}\n+{\n     public function authorize(): bool\n     {\n         return true;\n     }\n"
+                },
+                {
+                    "date": 1746894770074,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,24 @@\n+<?php\n+\n+namespace App\\Http\\Requests\\Product;\n+\n+use App\\Http\\Requests\\BaseRequest;\n+\n+class UpdateProductRequest extends BaseRequest\n+{\n+    public function authorize(): bool\n+    {\n+        return true;\n+    }\n+\n+    public function rules(): array\n+    {\n+        return [\n+            'name' => 'sometimes|string|max:255',\n+            'image' => 'nullable|image',\n+            'amount' => 'sometimes|integer|min:1',\n+            'price' => 'sometimes|numeric|min:1',\n+            'store_id' => 'sometimes|exists:stores,id',\n+        ];\n+    }\n+}\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1746894711882,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Http\\Requests\\Product;\n\nuse App\\Http\\Requests\\BaseRequest;\n\nclass UpdateProductRequest extends BaseRequest\n{\n    /**\n     * Determine if the user is authorized to make this request.\n     */\n    public function authorize(): bool\n    {\n        return true;\n    }\n\n    public function rules(): array\n    {\n        return [\n            'name' => 'sometimes|string|max:255',\n            'image' => 'nullable|image',\n            'amount' => 'sometimes|integer|min:1',\n            'price' => 'sometimes|double|min:1',\n            'store_id' => 'sometimes|exists:stores,id',\n        ];\n    }\n}"
+        }
+    ]
+}

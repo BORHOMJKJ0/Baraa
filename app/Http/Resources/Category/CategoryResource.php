@@ -21,7 +21,7 @@ class CategoryResource extends JsonResource
             'image' => $imageUrl,
         ];
         if ($request->routeIs('categories.show')) {
-            $validColumns = ['name', 'address', 'created_at', 'updated_at'];
+            $validColumns = ['name', 'address'];
             $validDirections = ['asc', 'desc'];
 
             $orderBy = $request->query('order_by');
@@ -35,7 +35,6 @@ class CategoryResource extends JsonResource
             }
 
             $stores = $query->paginate($request->query('per_page', 20));
-            $Stores = StoreResource::collection($stores);
             $data['stores'] = [
                 'data' => StoreResource::collection($stores),
                 'pagination' => [

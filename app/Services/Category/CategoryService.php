@@ -16,19 +16,14 @@ class CategoryService
 {
     use AuthTrait;
 
-    protected $categoryRepository;
-
-    public function __construct(CategoryRepository $categoryRepository)
-    {
-        $this->categoryRepository = $categoryRepository;
-    }
+    public function __construct(protected CategoryRepository $categoryRepository) {}
 
     public function getAllCategories(Request $request)
     {
         $items = $request->query('items', 20);
         $column = $request->query('column', 'name');
         $direction = $request->query('direction', 'asc');
-        $validColumns = ['name', 'created_at', 'updated_at'];
+        $validColumns = ['name'];
         $validDirections = ['asc', 'desc'];
 
         if (! in_array($column, $validColumns) || ! in_array($direction, $validDirections)) {

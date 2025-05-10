@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Store;
 
+use App\Http\Resources\Product\ProductResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -28,6 +29,9 @@ class StoreResource extends JsonResource
         ];
         if (! $request->routeIs('categories.show')) {
             $data['category'] = $this->category->name;
+        }
+        if ($request->routeIs('stores.show')) {
+            $data['products'] = ProductResource::collection($this->products);
         }
 
         return $data;

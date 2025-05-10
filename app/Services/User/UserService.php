@@ -23,12 +23,7 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class UserService
 {
-    protected $userRepository;
-
-    public function __construct(UserRepository $userRepository)
-    {
-        $this->userRepository = $userRepository;
-    }
+    public function __construct(protected UserRepository $userRepository) {}
 
     /**
      * Create new account

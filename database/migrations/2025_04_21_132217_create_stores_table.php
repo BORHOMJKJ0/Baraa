@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('address');
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Category::class)->constrained()->cascadeOnDelete();
-            $table->timestamps();
         });
 
     }

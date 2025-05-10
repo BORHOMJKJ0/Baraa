@@ -63,7 +63,7 @@ class StoreController extends Controller
      *         required=false,
      *         description="Column to sort by (name, address, created_at, updated_at)",
      *
-     *         @OA\Schema(type="string", enum={"name", "address", "created_at", "updated_at"}, example="name")
+     *         @OA\Schema(type="string", enum={"name", "address"}, example="name")
      *     ),
      *
      *     @OA\Response(
@@ -113,7 +113,7 @@ class StoreController extends Controller
      *
      *     @OA\Response(
      *         response=400,
-     *         description="Invalid sort column or direction. Allowed columns: name, address, created_at, updated_at. Allowed directions: asc, desc.",
+     *         description="Invalid sort column or direction. Allowed columns: name, address. Allowed directions: asc, desc.",
      *
      *         @OA\JsonContent(
      *

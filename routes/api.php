@@ -39,7 +39,7 @@ Route::middleware(['jwt.verify:api', 'email.verify'])->group(function () {
     Route::prefix('categories')->controller(CategoryController::class)->group(function () {
         Route::post('/{category}', 'update');
     });
-    Route::prefix('products')->controller(CategoryController::class)->group(function () {
+    Route::prefix('products')->controller(ProductController::class)->group(function () {
         Route::post('/{product}', 'update');
     });
     Route::apiResource('stores', StoreController::class);

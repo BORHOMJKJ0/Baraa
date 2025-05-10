@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Database\Seeders\Category\CategorySeeder;
+use Database\Seeders\Product\ProductSeeder;
 use Database\Seeders\Store\StoreSeeder;
 use Database\Seeders\User\UserSeeder;
 use Illuminate\Database\Seeder;
@@ -17,6 +18,7 @@ class DatabaseSeeder extends Seeder
                 UserSeeder::class,
                 CategorySeeder::class,
                 StoreSeeder::class,
+                ProductSeeder::class,
             ]);
         });
     }

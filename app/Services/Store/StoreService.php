@@ -25,7 +25,7 @@ class StoreService
             $items = $request->query('items', 20);
             $column = $request->query('column', 'name');
             $direction = $request->query('direction', 'asc');
-            $validColumns = ['name', 'address', 'created_at', 'updated_at'];
+            $validColumns = ['name', 'address'];
             $validDirections = ['asc', 'desc'];
 
             if (! in_array($column, $validColumns) || ! in_array($direction, $validDirections)) {
