@@ -2,6 +2,7 @@
 
 namespace App\Models\User;
 
+use App\Models\Product\Product;
 use App\Models\Store\Store;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -40,5 +41,10 @@ class User extends Authenticatable implements JWTSubject
     public function stores()
     {
         return $this->hasMany(Store::class);
+    }
+
+    public function favoriteproducts()
+    {
+        return $this->belongsToMany(Product::class, 'favorite_products', 'user_id', 'product_id');
     }
 }

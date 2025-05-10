@@ -83,7 +83,8 @@ class ProductController extends Controller
      *                         @OA\Property(property="name", type="string", example="asperiores"),
      *                         @OA\Property(property="image", type="string", example="https://via.placeholder.com/640x480.png/005599?text=technics+maxime"),
      *                         @OA\Property(property="price", type="integer", example=170),
-     *                         @OA\Property(property="store", type="string", example="autem")
+     *                         @OA\Property(property="store", type="string", example="autem"),
+     *                          @OA\Property(property="isFavorite", type="integer", example="1")
      *                     )
      *                 ),
      *                 @OA\Property(property="total_pages", type="integer", example=4),
@@ -172,6 +173,7 @@ class ProductController extends Controller
      *                     @OA\Property(property="price", type="string", example="1"),
      *                     @OA\Property(property="amount", type="string", example="10"),
      *                     @OA\Property(property="store", type="string", example="voluptas"),
+     *                     @OA\Property(property="isFavorite", type="integer", example="1")
      *                 )
      *             ),
      *             @OA\Property(property="status_code", type="integer", example=201)
@@ -264,6 +266,7 @@ class ProductController extends Controller
      *                     @OA\Property(property="price", type="integer", example=829),
      *                     @OA\Property(property="amount", type="integer", example=575),
      *                     @OA\Property(property="store", type="string", example="ullam"),
+     *                    @OA\Property(property="isFavorite", type="integer", example="1")
      *                  )
      *             ),
      *             @OA\Property(property="status_code", type="integer", example=200)
@@ -355,7 +358,8 @@ class ProductController extends Controller
      *                     @OA\Property(property="description", type="string", example="Red fruit"),
      *                     @OA\Property(property="price", type="string", example="20"),
      *                     @OA\Property(property="amount", type="string", example="2"),
-     *                     @OA\Property(property="store", type="string", example="provident")
+     *                     @OA\Property(property="store", type="string", example="provident"),
+     *                     @OA\Property(property="isFavorite", type="integer", example="1")
      *                 )
      *             ),
      *             @OA\Property(property="status_code", type="integer", example=200)

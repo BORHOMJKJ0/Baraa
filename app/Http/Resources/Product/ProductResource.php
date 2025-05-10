@@ -23,6 +23,7 @@ class ProductResource extends JsonResource
             'price' => $this->price,
             'amount' => $this->amount,
             'store' => $this->store->name,
+            'isFavorite' => $this->favorites()->where(['user_id' => auth()->id(), 'product_id' => $this->id])->exists() ? 1 : 0,
         ];
         if ($request->routeIs('products.index')) {
             unset($data['description']);

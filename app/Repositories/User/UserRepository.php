@@ -78,4 +78,9 @@ class UserRepository
     {
         return User::where('email', $email)->firstOrFail();
     }
+
+    public function findById($id)
+    {
+        return User::where('id', $id)->first();
+    }
 }

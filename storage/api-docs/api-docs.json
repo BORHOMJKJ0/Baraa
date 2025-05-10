@@ -69,9 +69,7 @@
                         "schema": {
                             "type": "string",
                             "enum": [
-                                "name",
-                                "created_at",
-                                "updated_at"
+                                "name"
                             ],
                             "example": "name"
                         }
@@ -140,7 +138,7 @@
                         }
                     },
                     "400": {
-                        "description": "Invalid sort column or direction. Allowed columns: name, created_at, updated_at. Allowed directions: asc, desc.",
+                        "description": "Invalid sort column or direction. Allowed columns: name. Allowed directions: asc, desc.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -838,6 +836,328 @@
                 ]
             }
         },
+        "/products/favorites/index": {
+            "get": {
+                "tags": [
+                    "Favorite Products"
+                ],
+                "summary": "Retrieve all favorite products",
+                "description": "Get a paginated list of the user's favorite products with details, images, category, and other associated data.",
+                "operationId": "299d2ebd87c0d1ffc0f2370a0a4d2b6f",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "items",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 20
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "retrieve all favorite products"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "products": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 2
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Baumbach, Wiegand and Monahan"
+                                                            },
+                                                            "image": {
+                                                                "type": "string",
+                                                                "example": "https://via.placeholder.com/640x480.png/00aaaa?text=apple+ut",
+                                                                "nullable": true
+                                                            },
+                                                            "description": {
+                                                                "type": "string",
+                                                                "example": "I shouldn't want YOURS..."
+                                                            },
+                                                            "price": {
+                                                                "type": "number",
+                                                                "format": "float",
+                                                                "example": 11.44
+                                                            },
+                                                            "amount": {
+                                                                "type": "integer",
+                                                                "example": 3
+                                                            },
+                                                            "store": {
+                                                                "type": "string",
+                                                                "example": "Zieme Group"
+                                                            },
+                                                            "isFavorite": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "total_pages": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "hasMorePages": {
+                                                    "type": "boolean",
+                                                    "example": false
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/products/favorites/store/{product_id}": {
+            "post": {
+                "tags": [
+                    "Favorite Products"
+                ],
+                "summary": "Add a product to the user's favorites",
+                "description": "Adds the specified product to the authenticated user's list of favorite products.",
+                "operationId": "e94f2eb34b11694e87437ed034956f39",
+                "parameters": [
+                    {
+                        "name": "product_id",
+                        "in": "path",
+                        "description": "ID of the product to add to favorites",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product added to favorites successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Product added to favorites"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 401
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Product Not Found"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 404
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/products/favorites/destroy/{product_id}": {
+            "delete": {
+                "tags": [
+                    "Favorite Products"
+                ],
+                "summary": "Remove a product from the user's favorites",
+                "description": "Removes the specified product from the authenticated user's list of favorite products.",
+                "operationId": "bcd0d66a3f9679ff6aceb0d41ab0f403",
+                "parameters": [
+                    {
+                        "name": "product_id",
+                        "in": "path",
+                        "description": "ID of the product to remove from favorites",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product removed from favorites successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Product removed from favorites"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorized"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 401
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product not found in favorites",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Product Not Found"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 404
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/products": {
             "get": {
                 "tags": [
@@ -933,6 +1253,10 @@
                                                             "store": {
                                                                 "type": "string",
                                                                 "example": "autem"
+                                                            },
+                                                            "isFavorite": {
+                                                                "type": "integer",
+                                                                "example": "1"
                                                             }
                                                         },
                                                         "type": "object"
@@ -1113,6 +1437,10 @@
                                                         "store": {
                                                             "type": "string",
                                                             "example": "voluptas"
+                                                        },
+                                                        "isFavorite": {
+                                                            "type": "integer",
+                                                            "example": "1"
                                                         }
                                                     },
                                                     "type": "object"
@@ -1301,6 +1629,10 @@
                                                         "store": {
                                                             "type": "string",
                                                             "example": "ullam"
+                                                        },
+                                                        "isFavorite": {
+                                                            "type": "integer",
+                                                            "example": "1"
                                                         }
                                                     },
                                                     "type": "object"
@@ -1473,6 +1805,10 @@
                                                         "store": {
                                                             "type": "string",
                                                             "example": "provident"
+                                                        },
+                                                        "isFavorite": {
+                                                            "type": "integer",
+                                                            "example": "1"
                                                         }
                                                     },
                                                     "type": "object"
@@ -1767,9 +2103,7 @@
                             "type": "string",
                             "enum": [
                                 "name",
-                                "address",
-                                "created_at",
-                                "updated_at"
+                                "address"
                             ],
                             "example": "name"
                         }
@@ -1870,7 +2204,7 @@
                         }
                     },
                     "400": {
-                        "description": "Invalid sort column or direction. Allowed columns: name, address, created_at, updated_at. Allowed directions: asc, desc.",
+                        "description": "Invalid sort column or direction. Allowed columns: name, address. Allowed directions: asc, desc.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -3777,6 +4111,10 @@
         {
             "name": "Categories",
             "description": "Categories"
+        },
+        {
+            "name": "Favorite Products",
+            "description": "Favorite Products"
         },
         {
             "name": "Products",

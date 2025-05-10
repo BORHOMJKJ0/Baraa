@@ -1,6 +1,8 @@
 <?php
 
+use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Category\CategoryController;
+use App\Http\Controllers\Product\FavoriteProductController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Store\StoreController;
 use App\Http\Controllers\User\UserController;
@@ -41,6 +43,15 @@ Route::middleware(['jwt.verify:api', 'email.verify'])->group(function () {
     });
     Route::prefix('products')->controller(ProductController::class)->group(function () {
         Route::post('/{product}', 'update');
+    });
+    Route::prefix('products/favorites')->controller(FavoriteProductController::class)->group(function () {
+        Route::get('/index', 'index');
+        Route::post('/store/{product}', 'store')->missing(function () {
+            return ResponseHelper::jsonResponse([], 'Product Not Found', 404, false);
+        });
+        Route::delete('/destroy/{product}', 'destroy')->missing(function () {
+            return ResponseHelper::jsonResponse([], 'Product Not Found', 404, false);
+        });
     });
     Route::apiResource('stores', StoreController::class);
     Route::apiResource('categories', CategoryController::class);
