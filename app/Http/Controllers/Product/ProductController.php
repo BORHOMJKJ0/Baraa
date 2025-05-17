@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\CreateProductRequest;
+use App\Http\Requests\Product\SearchProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Models\Product\Product;
 use App\Services\Product\ProductService;
@@ -124,7 +125,106 @@ class ProductController extends Controller
     {
         return $this->productService->getAllProducts($request);
     }
-
+    /**
+     * @OA\Get(
+     *     path="products/search/name",
+     *     summary="Search products by filters",
+     *     description="Retrieve a paginated list of products filtered by various criteria.",
+     *     tags={"Products"},
+     *     security={{"bearerAuth":{}}},
+     *
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         description="Page number for pagination",
+     *         required=false,
+     *
+     *         @OA\Schema(type="integer", example=1)
+     *     ),
+     *
+     *     @OA\Parameter(
+     *         name="items",
+     *         in="query",
+     *         description="Number of items per page",
+     *         required=false,
+     *
+     *         @OA\Schema(type="integer", example=10)
+     *     ),
+     *     @OA\RequestBody(
+     *          required=true,
+     *
+     *          @OA\MediaType(
+     *              mediaType="multipart/form-data",
+     *
+     *              @OA\Schema(
+     *                  type="object",
+     *                  required={"name"},
+     *
+     *                  @OA\Property(property="name", type="string", example="apple"),
+     *              )
+     *          )
+     *      ),
+     *
+     *  @OA\Response(
+     *      response=200,
+     *      description="Products retrieved successfully",
+     *      @OA\JsonContent(
+     *          @OA\Property(property="successful", type="boolean", example=true),
+     *          @OA\Property(property="message", type="string", example="Products retrieved successfully"),
+     *         @OA\Property(
+     *              property="data",
+     *              type="object",
+     *              @OA\Property(
+     *                 property="Products",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      type="object",
+     *                      @OA\Property(property="id", type="integer", example=1),
+     *                      @OA\Property(property="name", type="string", example="Gibson-Sauer"),
+     *                      @OA\Property(property="image", type="string", nullable=true, example="https://via.placeholder.com/640x480.png/001166?text=apple+sit"),
+     *                      @OA\Property(property="description", type="string", example="Product description goes here..."),
+     *                      @OA\Property(property="price", type="number", format="float", example=593.77),
+     *                      @OA\Property(property="amount", type="integer", example=5),
+     *                      @OA\Property(property="store", type="string", example="Runte, Hyatt and Ullrich"),
+     *                      @OA\Property(property="isFavorite", type="integer", example=0)
+     *                 )
+     *            ),
+     *             @OA\Property(property="total_pages", type="integer", example=1),
+     *            @OA\Property(property="current_page", type="integer", example=1),
+     *            @OA\Property(property="hasMorePages", type="boolean", example=false)
+     *         ),
+     *          @OA\Property(property="status_code", type="integer", example=200)
+     *      )
+     *  ),
+     *
+     *     @OA\Response(
+     *         response=404,
+     *         description="No products found for the given filters",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="successful", type="boolean", example=false),
+     *             @OA\Property(property="message", type="string", example="No products found for the given filters"),
+     *             @OA\Property(property="status_code", type="integer", example=404)
+     *         )
+     *     ),
+     *          @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="successful", type="boolean", example=false),
+     *              @OA\Property(property="message", type="string", example="Unauthenticated"),
+     *              @OA\Property(property="status_code", type="integer", example=401)
+     *          )
+     *      )
+     * )
+     */
+    public function searchByFilters(SearchProductRequest $request)
+    {
+        return $this->productService->searchByFilters($request);
+    }
     /**
      * @OA\Post(
      *     path="/products",

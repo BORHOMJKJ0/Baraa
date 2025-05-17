@@ -4,6 +4,7 @@ namespace App\Services\Product;
 
 use App\Helpers\ResponseHelper;
 use App\Http\Requests\Product\CreateProductRequest;
+use App\Http\Requests\Product\SearchProductRequest;
 use App\Http\Resources\Product\ProductResource;
 use App\Models\Product\Product;
 use App\Repositories\Product\ProductRepository;
@@ -38,6 +39,23 @@ class ProductService
         }
         $products = $this->productRepository->getAll($items, $column, $direction);
 
+        $data = [
+            'Products' => ProductResource::collection($products),
+            'total_pages' => $products->lastPage(),
+            'current_page' => $products->currentPage(),
+            'hasMorePages' => $products->hasMorePages(),
+        ];
+
+        return ResponseHelper::jsonResponse($data, 'Products retrieved successfully');
+    }
+    public function searchByFilters(SearchProductRequest $request)
+    {
+        $items = $request->query('items', 10);
+        $products = $this->productRepository->getProductsByFilters($request, $items);
+
+        if ($products->isEmpty()) {
+            return ResponseHelper::jsonResponse([], 'No products found for the given filters.', 404);
+        }
         $data = [
             'Products' => ProductResource::collection($products),
             'total_pages' => $products->lastPage(),

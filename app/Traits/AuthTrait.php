@@ -28,7 +28,7 @@ trait AuthTrait
 
     public function checkProduct($model, $modelType, $action)
     {
-        if ($product->store->user_id !== auth()->id()) {
+        if ($model->store->user_id !== auth()->id()) {
             throw new HttpResponseException(ResponseHelper::jsonResponse(
                 [],
                 "You are not authorized to {$action} this {$modelType}.This Product not in your Store ",

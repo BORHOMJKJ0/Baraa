@@ -1,6 +1,8 @@
 <?php
 
 use App\Helpers\ResponseHelper;
+use App\Http\Controllers\Cart\CartController;
+use App\Http\Controllers\Cart\CartItemsController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Product\FavoriteProductController;
 use App\Http\Controllers\Product\ProductController;
@@ -43,6 +45,7 @@ Route::middleware(['jwt.verify:api', 'email.verify'])->group(function () {
     });
     Route::prefix('products')->controller(ProductController::class)->group(function () {
         Route::post('/{product}', 'update');
+        Route::post('/search/name', 'searchByFilters');
     });
     Route::prefix('products/favorites')->controller(FavoriteProductController::class)->group(function () {
         Route::get('/index', 'index');
@@ -53,6 +56,13 @@ Route::middleware(['jwt.verify:api', 'email.verify'])->group(function () {
             return ResponseHelper::jsonResponse([], 'Product Not Found', 404, false);
         });
     });
+    Route::prefix('carts')->controller(CartController::class)->group(function () {
+        Route::get('/', 'show');
+        Route::post('/', 'store');
+        Route::put('/', 'update');
+        Route::delete('/', 'destroy');
+    });
+    Route::apiResource('cart_items', CartItemsController::class);
     Route::apiResource('stores', StoreController::class);
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('products', ProductController::class);

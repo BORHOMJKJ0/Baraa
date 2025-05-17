@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Product;
 
+use App\Http\Requests\Product\SearchProductRequest;
 use App\Models\Product\Product;
 use App\Traits\Lockable;
 
@@ -13,7 +14,17 @@ class ProductRepository
     {
         return (new Product)->getAllProducts($items, $column, $direction);
     }
+    public function getProductsByFilters(SearchProductRequest $request, $items)
+    {
+        $query = Product::query();
 
+        if ($request->has('name')) {
+            $query->where('name', 'like', '%'.$request->name.'%');
+        }
+
+        return $query->paginate($items, ['*']);
+
+    }
     public function create(array $data)
     {
         return $this->lockForCreate(function () use ($data) {

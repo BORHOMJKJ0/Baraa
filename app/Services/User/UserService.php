@@ -11,7 +11,9 @@ use App\Http\Requests\User\ResendOTPRequest;
 use App\Http\Requests\User\ResetPasswordRequest;
 use App\Http\Requests\User\UpdateProfileRequest;
 use App\Http\Resources\User\UserResource;
+use App\Models\Cart\Cart;
 use App\Notifications\OTPNotification;
+use App\Repositories\Cart\CartRepository;
 use App\Repositories\User\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -23,7 +25,7 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class UserService
 {
-    public function __construct(protected UserRepository $userRepository) {}
+    public function __construct(protected UserRepository $userRepository,protected CartRepository $cartRepository) {}
 
     /**
      * Create new account
@@ -63,7 +65,10 @@ class UserService
             'user' => UserResource::make($user),
             'token' => $token,
         ];
-
+        $carts = Cart::where('user_id', auth()->id())->get();
+        if ($carts->isEmpty()) {
+            $this->cartRepository->create();
+        }
         return ResponseHelper::jsonResponse($data, 'Email Verified successfully, You can use the app now');
     }
 
@@ -88,7 +93,10 @@ class UserService
             'user' => UserResource::make($user),
             'token' => $token,
         ];
-
+        $carts = Cart::where('user_id', auth()->id())->get();
+        if ($carts->isEmpty()) {
+            $this->cartRepository->create();
+        }
         return ResponseHelper::jsonResponse($data, 'Logged in successfully');
     }
 

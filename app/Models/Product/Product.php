@@ -2,6 +2,7 @@
 
 namespace App\Models\Product;
 
+use App\Models\Cart\Cart_items;
 use App\Models\Store\Store;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,6 +20,10 @@ class Product extends Model
     {
         return $this->belongsTo(Store::class);
 
+    }
+    public function cart_items()
+    {
+        return $this->HasMany(Cart_items::class);
     }
 
     public function favorites()
