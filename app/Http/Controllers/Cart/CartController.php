@@ -8,7 +8,8 @@ use Illuminate\Http\JsonResponse;
 
 class CartController extends Controller
 {
-    public function __construct(protected CartService $cartService){}
+    public function __construct(protected CartService $cartService) {}
+
     /**
      * @OA\SecurityScheme(
      *     securityScheme="bearerAuth",
@@ -28,8 +29,10 @@ class CartController extends Controller
      *     @OA\Response(
      *         response=201,
      *         description="Cart created successfully!",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="successful", type="boolean", example=true),
      *             @OA\Property(property="message", type="string", example="Cart created successfully!"),
      *             @OA\Property(
@@ -49,8 +52,10 @@ class CartController extends Controller
      *                         property="items",
      *                         type="array",
      *                         example={},
+     *
      *                         @OA\Items(
      *                             type="object",
+     *
      *                             @OA\Property(property="id", type="integer", example=1),
      *                             @OA\Property(property="name", type="string", example="Product A"),
      *                             @OA\Property(property="total_quantity", type="integer", example=3)
@@ -65,7 +70,9 @@ class CartController extends Controller
      *     @OA\Response(
      *         response=403,
      *         description="Forbidden error",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="This User have already Cart"),
      *             @OA\Property(property="status_code", type="integer", example=403)
@@ -75,7 +82,9 @@ class CartController extends Controller
      *     @OA\Response(
      *         response=401,
      *         description="Unauthenticated",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="successful", type="boolean", example=false),
      *             @OA\Property(property="message", type="string", example="Unauthenticated"),
      *             @OA\Property(property="status_code", type="integer", example=401)
@@ -83,16 +92,17 @@ class CartController extends Controller
      *     )
      * )
      */
-
     public function store(): JsonResponse
     {
         return $this->cartService->createCart();
     }
+
     /**
      * @OA\Put(
      *     path="/carts",
      *     summary="Update a cart",
      *     tags={"Carts"},
+     *    description="place order the items",
      *     security={{"bearerAuth": {}}},
      *
      *     @OA\Header(
@@ -112,8 +122,10 @@ class CartController extends Controller
      *     @OA\Response(
      *          response=200,
      *         description="Cart updated successfully!",
+     *
      *         @OA\JsonContent(
      *             type="object",
+     *
      *             @OA\Property(property="successful", type="boolean", example=true),
      *             @OA\Property(property="message", type="string", example="Cart updated successfully!"),
      *            @OA\Property(
@@ -133,8 +145,10 @@ class CartController extends Controller
      *                          property="items",
      *                          type="array",
      *                          example={},
+     *
      *                          @OA\Items(
      *                              type="object",
+     *
      *                              @OA\Property(property="id", type="integer", example=1),
      *                              @OA\Property(property="name", type="string", example="Product A"),
      *                              @OA\Property(property="total_quantity", type="integer", example=3)
@@ -145,7 +159,6 @@ class CartController extends Controller
      *              @OA\Property(property="status_code", type="integer", example=200)
      *          )
      *      ),
-     *
      *
      *     @OA\Response(
      *         response=404,
@@ -158,6 +171,7 @@ class CartController extends Controller
      *            @OA\Property(property="status_code", type="integer", example=404)
      *         )
      *     ),
+     *
      *     @OA\Response(
      *           response=401,
      *           description="Unauthenticated",
@@ -175,6 +189,7 @@ class CartController extends Controller
     {
         return $this->cartService->updateCart();
     }
+
     /**
      * @OA\Get(
      *     path="/carts",
@@ -185,8 +200,10 @@ class CartController extends Controller
      *     @OA\Response(
      *           response=200,
      *          description="Cart retrieved successfully!",
+     *
      *           @OA\JsonContent(
      *               type="object",
+     *
      *               @OA\Property(property="successful", type="boolean", example=true),
      *               @OA\Property(property="message", type="string", example="Cart retrieved successfully!"),
      *               @OA\Property(
@@ -200,9 +217,11 @@ class CartController extends Controller
      *                       @OA\Property(
      *                          property="items",
      *                          type="array",
+     *
      *                          @OA\Items(
      *                             type="object",
      *                              required={"id", "quantity", "product"},
+     *
      *                              @OA\Property(property="id", type="integer", example=1),
      *                              @OA\Property(property="quantity", type="integer", example=59),
      *                              @OA\Property(
@@ -222,6 +241,7 @@ class CartController extends Controller
      *               @OA\Property(property="status_code", type="integer", example=200)
      *           )
      *       ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Cart not found",
@@ -233,6 +253,7 @@ class CartController extends Controller
      *            @OA\Property(property="status_code", type="integer", example=404)
      *         )
      *     ),
+     *
      *     @OA\Response(
      *           response=401,
      *           description="Unauthenticated",
@@ -250,6 +271,7 @@ class CartController extends Controller
     {
         return $this->cartService->getCartById();
     }
+
     /**
      * @OA\Delete(
      *     path="/carts",
@@ -280,6 +302,7 @@ class CartController extends Controller
      *          @OA\Property(property="status_code", type="integer", example=404)
      *         )
      *     ),
+     *
      *     @OA\Response(
      *           response=401,
      *           description="Unauthenticated",

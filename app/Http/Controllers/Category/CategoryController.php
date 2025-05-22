@@ -62,7 +62,7 @@ class CategoryController extends Controller
      *         name="column",
      *         in="query",
      *         required=false,
-     *         description="Column to sort by (name, created_at, updated_at)",
+     *         description="Column to sort by (name)",
      *
      *         @OA\Schema(type="string", enum={"name"}, example="name")
      *     ),

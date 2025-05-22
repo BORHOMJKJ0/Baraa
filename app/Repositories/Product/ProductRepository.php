@@ -14,6 +14,7 @@ class ProductRepository
     {
         return (new Product)->getAllProducts($items, $column, $direction);
     }
+
     public function getProductsByFilters(SearchProductRequest $request, $items)
     {
         $query = Product::query();
@@ -25,6 +26,7 @@ class ProductRepository
         return $query->paginate($items, ['*']);
 
     }
+
     public function create(array $data)
     {
         return $this->lockForCreate(function () use ($data) {

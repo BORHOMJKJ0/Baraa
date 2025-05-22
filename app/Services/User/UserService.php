@@ -25,7 +25,7 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class UserService
 {
-    public function __construct(protected UserRepository $userRepository,protected CartRepository $cartRepository) {}
+    public function __construct(protected UserRepository $userRepository, protected CartRepository $cartRepository) {}
 
     /**
      * Create new account
@@ -60,15 +60,18 @@ class UserService
         $user = $this->userRepository->markEmailAsVerified($email);
 
         $token = JWTAuth::fromUser($user);
+        JWTAuth::setToken($token)->authenticate();
+
+        $carts = Cart::where('user_id', auth()->id())->get();
+        if ($carts->isEmpty()) {
+            $this->cartRepository->create();
+        }
 
         $data = [
             'user' => UserResource::make($user),
             'token' => $token,
         ];
-        $carts = Cart::where('user_id', auth()->id())->get();
-        if ($carts->isEmpty()) {
-            $this->cartRepository->create();
-        }
+
         return ResponseHelper::jsonResponse($data, 'Email Verified successfully, You can use the app now');
     }
 
@@ -97,6 +100,7 @@ class UserService
         if ($carts->isEmpty()) {
             $this->cartRepository->create();
         }
+
         return ResponseHelper::jsonResponse($data, 'Logged in successfully');
     }
 
@@ -196,6 +200,8 @@ class UserService
     public function deleteAccount(): JsonResponse
     {
         JWTAuth::invalidate(JWTAuth::getToken());
+        $cart = Cart::where('user_id', auth()->id())->first();
+        $this->cartRepository->delete($cart);
         $this->userRepository->delete();
 
         return ResponseHelper::jsonResponse([], 'Account deleted successfully!');

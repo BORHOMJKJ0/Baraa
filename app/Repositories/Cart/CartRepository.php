@@ -24,6 +24,7 @@ class CartRepository
     {
 
         return $this->lockForUpdate(Cart::class, $Cart->id, function ($lockedCart) {
+            $lockedCart->cart_items()->delete();
             $data = [];
             $lockedCart->update($data);
 

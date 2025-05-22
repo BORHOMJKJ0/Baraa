@@ -11,25 +11,24 @@ class CartResource extends JsonResource
     {
         $mergedItems = [];
 
-        // Merge duplicate cart items by product_id
         foreach ($this->cart_items as $cartItem) {
             $productId = $cartItem->product->id;
 
             if (isset($mergedItems[$productId])) {
-                // Increase quantity of existing item
                 $mergedItems[$productId]->quantity += $cartItem->quantity;
             } else {
-                // Clone the cartItem (to avoid modifying the original)
                 $mergedItems[$productId] = clone $cartItem;
             }
         }
 
         $totalPrice = 0;
 
-        // Calculate total price for merged items
         foreach ($mergedItems as $item) {
             $totalPrice += $item->product->price * $item->quantity;
         }
+        usort($mergedItems, function ($a, $b) {
+            return strcmp($a->product->name, $b->product->name);
+        });
 
         return [
             'id' => $this->id,

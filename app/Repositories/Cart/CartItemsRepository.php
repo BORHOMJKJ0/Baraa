@@ -10,11 +10,9 @@ class CartItemsRepository
 {
     use Lockable;
 
-    public function getAll($items, $page)
+    public function getAll($items, $column, $direction)
     {
-        return Cart_items::whereHas('cart', function ($query) {
-            $query->where('user_id', auth()->id());
-        })->paginate($items, ['*'], 'page', $page);
+        return Cart_items::getAllCartItems($items, $column, $direction);
     }
 
     public function create(array $data)
@@ -40,7 +38,12 @@ class CartItemsRepository
     public function delete(Cart_items $cart_items)
     {
         return $this->lockForDelete(Cart_items::class, $cart_items->id, function ($locked_Cart_items) {
-            return $locked_Cart_items->delete();
+            return $locked_Cart_items->Forcedelete();
         });
+    }
+
+    public function getDeletedProductItems($items, $column, $direction)
+    {
+        return Cart_items::getAllDeletedCartItems($items, $column, $direction);
     }
 }

@@ -48,6 +48,7 @@ class ProductService
 
         return ResponseHelper::jsonResponse($data, 'Products retrieved successfully');
     }
+
     public function searchByFilters(SearchProductRequest $request)
     {
         $items = $request->query('items', 10);

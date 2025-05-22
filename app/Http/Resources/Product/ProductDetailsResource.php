@@ -27,6 +27,7 @@ class ProductDetailsResource extends JsonResource
             'price' => $this->price,
             'isFavorite' => $this->favorites()->where(['user_id' => auth()->id(), 'product_id' => $this->id])->exists() ? 1 : 0,
         ];
+
         return $data;
     }
 }

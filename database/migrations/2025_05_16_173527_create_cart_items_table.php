@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(Cart::class)->constrained()->cascadeOnDelete();
             $table->integer('quantity');
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
+            $table->softDeletes();
         });
     }
 

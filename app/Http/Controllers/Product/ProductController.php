@@ -125,8 +125,9 @@ class ProductController extends Controller
     {
         return $this->productService->getAllProducts($request);
     }
+
     /**
-     * @OA\Get(
+     * @OA\Post(
      *     path="products/search/name",
      *     summary="Search products by filters",
      *     description="Retrieve a paginated list of products filtered by various criteria.",
@@ -150,6 +151,7 @@ class ProductController extends Controller
      *
      *         @OA\Schema(type="integer", example=10)
      *     ),
+     *
      *     @OA\RequestBody(
      *          required=true,
      *
@@ -168,7 +170,9 @@ class ProductController extends Controller
      *  @OA\Response(
      *      response=200,
      *      description="Products retrieved successfully",
+     *
      *      @OA\JsonContent(
+     *
      *          @OA\Property(property="successful", type="boolean", example=true),
      *          @OA\Property(property="message", type="string", example="Products retrieved successfully"),
      *         @OA\Property(
@@ -177,8 +181,10 @@ class ProductController extends Controller
      *              @OA\Property(
      *                 property="Products",
      *                  type="array",
+     *
      *                  @OA\Items(
      *                      type="object",
+     *
      *                      @OA\Property(property="id", type="integer", example=1),
      *                      @OA\Property(property="name", type="string", example="Gibson-Sauer"),
      *                      @OA\Property(property="image", type="string", nullable=true, example="https://via.placeholder.com/640x480.png/001166?text=apple+sit"),
@@ -208,6 +214,7 @@ class ProductController extends Controller
      *             @OA\Property(property="status_code", type="integer", example=404)
      *         )
      *     ),
+     *
      *          @OA\Response(
      *          response=401,
      *          description="Unauthenticated",
@@ -225,6 +232,7 @@ class ProductController extends Controller
     {
         return $this->productService->searchByFilters($request);
     }
+
     /**
      * @OA\Post(
      *     path="/products",

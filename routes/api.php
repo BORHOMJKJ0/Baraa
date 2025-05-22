@@ -62,6 +62,9 @@ Route::middleware(['jwt.verify:api', 'email.verify'])->group(function () {
         Route::put('/', 'update');
         Route::delete('/', 'destroy');
     });
+    Route::prefix('cart_items')->controller(CartItemsController::class)->group(function () {
+        Route::get('/archive', 'archive')->name('cart_items.archive');
+    });
     Route::apiResource('cart_items', CartItemsController::class);
     Route::apiResource('stores', StoreController::class);
     Route::apiResource('categories', CategoryController::class);

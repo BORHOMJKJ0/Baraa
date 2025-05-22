@@ -13,9 +13,7 @@ class CartService
 {
     use AuthTrait;
 
-
-    public function __construct(protected CartRepository $cartRepository){}
-
+    public function __construct(protected CartRepository $cartRepository) {}
 
     public function getCartById()
     {
@@ -28,7 +26,6 @@ class CartService
         return ResponseHelper::jsonResponse($data, 'Cart retrieved successfully!');
     }
 
-
     public function createCart()
     {
         $carts = Cart::where('user_id', auth()->id())->get();
@@ -37,11 +34,12 @@ class CartService
             $data = [
                 'Cart' => CartResource::make($cart),
             ];
-             return ResponseHelper::jsonResponse($data, 'Cart created successfully!',201);
-        }
-        return ResponseHelper::jsonResponse([], 'This User have already Cart',403,false);
-    }
 
+            return ResponseHelper::jsonResponse($data, 'Cart created successfully!', 201);
+        }
+
+        return ResponseHelper::jsonResponse([], 'This User have already Cart', 403, false);
+    }
 
     public function updateCart()
     {
@@ -59,7 +57,6 @@ class CartService
 
         return $response;
     }
-
 
     public function deleteCart()
     {
