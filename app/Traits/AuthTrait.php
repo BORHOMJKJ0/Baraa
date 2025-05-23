@@ -53,4 +53,54 @@ trait AuthTrait
             ));
         }
     }
+
+    public function checkAndUpdateProductAmounts($cartItems)
+    {
+        $grouped = $cartItems->groupBy('product_id');
+
+        $failedProducts = collect();
+
+        foreach ($grouped as $productId => $items) {
+            $totalQuantity = $items->sum('quantity');
+
+            $product = $items->first()->product;
+
+            if (! $product) {
+                $failedProducts->push([
+                    'product_id' => $productId,
+                    'reason' => 'Product not found',
+                    'cart_item_ids' => $items->pluck('id'),
+                ]);
+
+                continue;
+            }
+
+            if ($product->amount < $totalQuantity) {
+                $failedProducts->push([
+                    'product_id' => $product->id,
+                    'product_name' => $product->name,
+                    'available_amount' => $product->amount,
+                    'requested_quantity' => $totalQuantity,
+                    'cart_item_ids' => $items->pluck('id'),
+                ]);
+            }
+        }
+
+        if ($failedProducts->isNotEmpty()) {
+            throw new HttpResponseException(ResponseHelper::jsonResponse(
+                $failedProducts,
+                'Some products do not have sufficient quantity to fulfill your order.',
+                400,
+                false
+            ));
+        }
+
+        foreach ($grouped as $productId => $items) {
+            $totalQuantity = $items->sum('quantity');
+            $product = $items->first()->product;
+
+            $product->amount -= $totalQuantity;
+            $product->save();
+        }
+    }
 }

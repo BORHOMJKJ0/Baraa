@@ -455,7 +455,7 @@ class CartItemsController extends Controller
      * @OA\Get(
      *     path="/cart_items/archive",
      *     summary="Get archived cart items grouped by deleted timestamp",
-     *     tags={"Cart Items"},
+     *     tags={"Cart_items"},
      *     security={{"bearerAuth":{}}},
      *
      *     @OA\Parameter(

@@ -160,6 +160,39 @@ class CartController extends Controller
      *          )
      *      ),
      *
+     *      * @OA\Response(
+     *     response=400,
+     *     description="Insufficient product quantity to fulfill order",
+     *
+     *     @OA\JsonContent(
+     *         type="object",
+     *
+     *         @OA\Property(property="successful", type="boolean", example=false),
+     *         @OA\Property(property="message", type="string", example="Some products do not have sufficient quantity to fulfill your order."),
+     *         @OA\Property(
+     *             property="data",
+     *             type="array",
+     *
+     *             @OA\Items(
+     *                 type="object",
+     *
+     *                 @OA\Property(property="product_id", type="integer", example=2),
+     *                 @OA\Property(property="product_name", type="string", example="Lind-Macejkovic"),
+     *                 @OA\Property(property="available_amount", type="integer", example=3),
+     *                 @OA\Property(property="requested_quantity", type="integer", example=200),
+     *                 @OA\Property(
+     *                     property="cart_item_ids",
+     *                     type="array",
+     *
+     *                     @OA\Items(type="integer", example=19)
+     *                 )
+     *             )
+     *         ),
+     *
+     *         @OA\Property(property="status_code", type="integer", example=400)
+     *     )
+     * ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Cart not found",
@@ -197,50 +230,58 @@ class CartController extends Controller
      *     tags={"Carts"},
      *     security={{"bearerAuth": {}}},
      *
-     *     @OA\Response(
-     *           response=200,
-     *          description="Cart retrieved successfully!",
+     * @OA\Response(
+     *     response=200,
+     *     description="Cart retrieved successfully!",
      *
-     *           @OA\JsonContent(
-     *               type="object",
+     *     @OA\JsonContent(
+     *         type="object",
      *
-     *               @OA\Property(property="successful", type="boolean", example=true),
-     *               @OA\Property(property="message", type="string", example="Cart retrieved successfully!"),
-     *               @OA\Property(
-     *                   property="data",
-     *                   type="object",
-     *                   @OA\Property(
-     *                      property="Cart",
-     *                       type="object",
-     *                     @OA\Property(property="id", type="integer", example=8),
-     *                       @OA\Property(property="total_price", type="number", format="float", example=40664.57),
-     *                       @OA\Property(
-     *                          property="items",
-     *                          type="array",
+     *         @OA\Property(property="successful", type="boolean", example=true),
+     *         @OA\Property(property="message", type="string", example="Cart retrieved successfully!"),
+     *         @OA\Property(
+     *             property="data",
+     *             type="object",
+     *             @OA\Property(
+     *                 property="Cart",
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=6),
+     *                 @OA\Property(property="total_price", type="number", format="float", example=348734.4),
+     *                 @OA\Property(
+     *                     property="items",
+     *                     type="array",
      *
-     *                          @OA\Items(
+     *                     @OA\Items(
+     *                         type="object",
+     *
+     *                         @OA\Property(
+     *                             property="product",
      *                             type="object",
-     *                              required={"id", "quantity", "product"},
+     *                             @OA\Property(property="id", type="integer", example=2),
+     *                             @OA\Property(property="name", type="string", example="Lind-Macejkovic"),
+     *                             @OA\Property(property="image", type="string", nullable=true, example=null),
+     *                             @OA\Property(property="price", type="number", format="float", example=558.46),
+     *                             @OA\Property(property="isFavorite", type="integer", example=0)
+     *                         ),
+     *                         @OA\Property(property="total_quantity", type="integer", example=600),
+     *                         @OA\Property(
+     *                             property="cart_items",
+     *                             type="array",
      *
-     *                              @OA\Property(property="id", type="integer", example=1),
-     *                              @OA\Property(property="quantity", type="integer", example=59),
-     *                              @OA\Property(
-     *                                  property="product",
-     *                                  type="object",
-     *                                  required={"id", "name", "price", "isFavorite"},
-     *                                  @OA\Property(property="id", type="integer", example=8),
-     *                                  @OA\Property(property="name", type="string", example="Franecki, Bergnaum and Leuschke"),
-     *                                  @OA\Property(property="image", type="string", nullable=true, example="https://via.placeholder.com/640x480.png/00eecc?text=apple+nobis"),
-     *                                 @OA\Property(property="price", type="number", format="float", example=689.23),
-     *                                  @OA\Property(property="isFavorite", type="integer", example=0)
-     *                              )
-     *                          )
-     *                       )
-     *                   )
-     *               ),
-     *               @OA\Property(property="status_code", type="integer", example=200)
-     *           )
-     *       ),
+     *                             @OA\Items(
+     *                                 type="object",
+     *
+     *                                 @OA\Property(property="id", type="integer", example=19),
+     *                                 @OA\Property(property="quantity", type="integer", example=200)
+     *                             )
+     *                         )
+     *                     )
+     *                 )
+     *             )
+     *         ),
+     *         @OA\Property(property="status_code", type="integer", example=200)
+     *     )
+     * ),
      *
      *     @OA\Response(
      *         response=404,

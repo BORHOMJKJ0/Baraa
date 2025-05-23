@@ -44,7 +44,11 @@ class CartService
     public function updateCart()
     {
         try {
-            $cart = Cart::where('user_id', auth()->id())->first();
+            $cart = Cart::where('user_id', auth()->id())->with('cart_items.product')->first();
+            if (! $cart) {
+                return ResponseHelper::jsonResponse([], 'Cart not found.', 404, false);
+            }
+            $this->checkAndUpdateProductAmounts($cart->cart_items);
             $cart = $this->cartRepository->update($cart);
             $data = [
                 'Cart' => CartResource::make($cart),

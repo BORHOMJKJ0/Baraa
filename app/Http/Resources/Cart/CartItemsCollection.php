@@ -11,7 +11,7 @@ class CartItemsCollection extends ResourceCollection
         if ($request->routeIs('cart_items.archive')) {
             $grouped = $this->collection->groupBy(function ($item) {
                 return $item->deleted_at->format('Y-m-d H:i');
-            });
+            })->sortKeysDesc();
 
             return [
                 'grouped_items' => $grouped->map(function ($group, $deletedAt) use ($request) {

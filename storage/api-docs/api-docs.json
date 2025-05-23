@@ -46,55 +46,36 @@
                                                     "properties": {
                                                         "id": {
                                                             "type": "integer",
-                                                            "example": 8
+                                                            "example": 6
                                                         },
                                                         "total_price": {
                                                             "type": "number",
                                                             "format": "float",
-                                                            "example": 40664.57
+                                                            "example": 348734.4
                                                         },
                                                         "items": {
                                                             "type": "array",
                                                             "items": {
-                                                                "required": [
-                                                                    "id",
-                                                                    "quantity",
-                                                                    "product"
-                                                                ],
                                                                 "properties": {
-                                                                    "id": {
-                                                                        "type": "integer",
-                                                                        "example": 1
-                                                                    },
-                                                                    "quantity": {
-                                                                        "type": "integer",
-                                                                        "example": 59
-                                                                    },
                                                                     "product": {
-                                                                        "required": [
-                                                                            "id",
-                                                                            "name",
-                                                                            "price",
-                                                                            "isFavorite"
-                                                                        ],
                                                                         "properties": {
                                                                             "id": {
                                                                                 "type": "integer",
-                                                                                "example": 8
+                                                                                "example": 2
                                                                             },
                                                                             "name": {
                                                                                 "type": "string",
-                                                                                "example": "Franecki, Bergnaum and Leuschke"
+                                                                                "example": "Lind-Macejkovic"
                                                                             },
                                                                             "image": {
                                                                                 "type": "string",
-                                                                                "example": "https://via.placeholder.com/640x480.png/00eecc?text=apple+nobis",
+                                                                                "example": null,
                                                                                 "nullable": true
                                                                             },
                                                                             "price": {
                                                                                 "type": "number",
                                                                                 "format": "float",
-                                                                                "example": 689.23
+                                                                                "example": 558.46
                                                                             },
                                                                             "isFavorite": {
                                                                                 "type": "integer",
@@ -102,6 +83,26 @@
                                                                             }
                                                                         },
                                                                         "type": "object"
+                                                                    },
+                                                                    "total_quantity": {
+                                                                        "type": "integer",
+                                                                        "example": 600
+                                                                    },
+                                                                    "cart_items": {
+                                                                        "type": "array",
+                                                                        "items": {
+                                                                            "properties": {
+                                                                                "id": {
+                                                                                    "type": "integer",
+                                                                                    "example": 19
+                                                                                },
+                                                                                "quantity": {
+                                                                                    "type": "integer",
+                                                                                    "example": 200
+                                                                                }
+                                                                            },
+                                                                            "type": "object"
+                                                                        }
                                                                     }
                                                                 },
                                                                 "type": "object"
@@ -251,6 +252,61 @@
                                         "status_code": {
                                             "type": "integer",
                                             "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Insufficient product quantity to fulfill order",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Some products do not have sufficient quantity to fulfill your order."
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "product_id": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "product_name": {
+                                                        "type": "string",
+                                                        "example": "Lind-Macejkovic"
+                                                    },
+                                                    "available_amount": {
+                                                        "type": "integer",
+                                                        "example": 3
+                                                    },
+                                                    "requested_quantity": {
+                                                        "type": "integer",
+                                                        "example": 200
+                                                    },
+                                                    "cart_item_ids": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "integer",
+                                                            "example": 19
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 400
                                         }
                                     },
                                     "type": "object"
@@ -559,7 +615,34 @@
                         "required": false,
                         "schema": {
                             "type": "integer",
-                            "example": 20
+                            "example": 5
+                        }
+                    },
+                    {
+                        "name": "direction",
+                        "in": "query",
+                        "description": "Sorting direction (asc or desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "example": "asc"
+                        }
+                    },
+                    {
+                        "name": "column",
+                        "in": "query",
+                        "description": "Column to sort by (quantity,product_name)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "quantity,product_name"
+                            ],
+                            "example": "quantity,product_name"
                         }
                     }
                 ],
@@ -1253,10 +1336,59 @@
         "/cart_items/archive": {
             "get": {
                 "tags": [
-                    "Cart Items"
+                    "Cart_items"
                 ],
                 "summary": "Get archived cart items grouped by deleted timestamp",
                 "operationId": "e605ba27e63a31683793716142eaee47",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "items",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 5
+                        }
+                    },
+                    {
+                        "name": "direction",
+                        "in": "query",
+                        "description": "Sorting direction (asc or desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "example": "asc"
+                        }
+                    },
+                    {
+                        "name": "column",
+                        "in": "query",
+                        "description": "Column to sort by (quantity,product_name)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "quantity,product_name"
+                            ],
+                            "example": "quantity,product_name"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "archived Cart_items retrieved successfully!",
@@ -1454,7 +1586,7 @@
                     {
                         "name": "column",
                         "in": "query",
-                        "description": "Column to sort by (name, created_at, updated_at)",
+                        "description": "Column to sort by (name)",
                         "required": false,
                         "schema": {
                             "type": "string",
@@ -5694,10 +5826,6 @@
         {
             "name": "Cart_items",
             "description": "Cart_items"
-        },
-        {
-            "name": "Cart Items",
-            "description": "Cart Items"
         },
         {
             "name": "Categories",
