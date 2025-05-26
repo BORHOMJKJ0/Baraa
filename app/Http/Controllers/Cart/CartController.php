@@ -260,6 +260,7 @@ class CartController extends Controller
      *                             @OA\Property(property="id", type="integer", example=2),
      *                             @OA\Property(property="name", type="string", example="Lind-Macejkovic"),
      *                             @OA\Property(property="image", type="string", nullable=true, example=null),
+     *                             @OA\Property(property="amount", type="integer", example=25),
      *                             @OA\Property(property="price", type="number", format="float", example=558.46),
      *                             @OA\Property(property="isFavorite", type="integer", example=0)
      *                         ),

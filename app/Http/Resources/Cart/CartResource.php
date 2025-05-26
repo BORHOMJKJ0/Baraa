@@ -52,6 +52,7 @@ class CartResource extends JsonResource
                     'id' => $product->id,
                     'name' => $product->name,
                     'image' =>$imageUrl,
+                    'amount' =>$product->amount,
                     'price' => $product->price,
                     'isFavorite' => $product->favorites()
                         ->where([

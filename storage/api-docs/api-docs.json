@@ -72,6 +72,10 @@
                                                                                 "example": null,
                                                                                 "nullable": true
                                                                             },
+                                                                            "amount": {
+                                                                                "type": "integer",
+                                                                                "example": 25
+                                                                            },
                                                                             "price": {
                                                                                 "type": "number",
                                                                                 "format": "float",
