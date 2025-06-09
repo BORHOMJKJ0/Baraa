@@ -59,7 +59,7 @@ Route::middleware(['jwt.verify:api', 'email.verify'])->group(function () {
     Route::prefix('carts')->controller(CartController::class)->group(function () {
         Route::get('/', 'show');
         Route::post('/', 'store');
-        Route::put('/', 'update');
+        Route::post('/placeOrder', 'update');
         Route::delete('/', 'destroy');
     });
     Route::prefix('cart_items')->controller(CartItemsController::class)->group(function () {

@@ -98,9 +98,9 @@ class CartController extends Controller
     }
 
     /**
-     * @OA\Put(
-     *     path="/carts",
-     *     summary="Update a cart",
+     * @OA\Post(
+     *     path="/carts/placeOrder",
+     *     summary="Place Order",
      *     tags={"Carts"},
      *    description="place order the items",
      *     security={{"bearerAuth": {}}},

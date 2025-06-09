@@ -491,7 +491,7 @@ class CartItemsController extends Controller
      *          required=false,
      *          description="Column to sort by (quantity,product_name)",
      *
-     *          @OA\Schema(type="string", enum={"quantity,product_name"}, example="quantity,product_name")
+     *          @OA\Schema(type="string", enum={"quantity","product_name"}, example="quantity,product_name")
      *      ),
      *
      *     @OA\Response(

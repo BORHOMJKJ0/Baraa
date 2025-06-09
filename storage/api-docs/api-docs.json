@@ -183,196 +183,6 @@
                     }
                 ]
             },
-            "put": {
-                "tags": [
-                    "Carts"
-                ],
-                "summary": "Update a cart",
-                "description": "place order the items",
-                "operationId": "f46a520f52b933afef86a660e3f7710a",
-                "responses": {
-                    "200": {
-                        "description": "Cart updated successfully!",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "successful": {
-                                            "type": "boolean",
-                                            "example": true
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Cart updated successfully!"
-                                        },
-                                        "data": {
-                                            "properties": {
-                                                "Cart": {
-                                                    "properties": {
-                                                        "id": {
-                                                            "type": "integer",
-                                                            "example": 7
-                                                        },
-                                                        "user": {
-                                                            "properties": {
-                                                                "id": {
-                                                                    "type": "integer",
-                                                                    "example": 11
-                                                                },
-                                                                "name": {
-                                                                    "type": "string",
-                                                                    "example": "Abood Sarhan"
-                                                                }
-                                                            },
-                                                            "type": "object"
-                                                        },
-                                                        "items": {
-                                                            "type": "array",
-                                                            "items": {
-                                                                "properties": {
-                                                                    "id": {
-                                                                        "type": "integer",
-                                                                        "example": 1
-                                                                    },
-                                                                    "name": {
-                                                                        "type": "string",
-                                                                        "example": "Product A"
-                                                                    },
-                                                                    "total_quantity": {
-                                                                        "type": "integer",
-                                                                        "example": 3
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            },
-                                                            "example": []
-                                                        }
-                                                    },
-                                                    "type": "object"
-                                                }
-                                            },
-                                            "type": "object"
-                                        },
-                                        "status_code": {
-                                            "type": "integer",
-                                            "example": 200
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Insufficient product quantity to fulfill order",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "successful": {
-                                            "type": "boolean",
-                                            "example": false
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Some products do not have sufficient quantity to fulfill your order."
-                                        },
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "properties": {
-                                                    "product_id": {
-                                                        "type": "integer",
-                                                        "example": 2
-                                                    },
-                                                    "product_name": {
-                                                        "type": "string",
-                                                        "example": "Lind-Macejkovic"
-                                                    },
-                                                    "available_amount": {
-                                                        "type": "integer",
-                                                        "example": 3
-                                                    },
-                                                    "requested_quantity": {
-                                                        "type": "integer",
-                                                        "example": 200
-                                                    },
-                                                    "cart_item_ids": {
-                                                        "type": "array",
-                                                        "items": {
-                                                            "type": "integer",
-                                                            "example": 19
-                                                        }
-                                                    }
-                                                },
-                                                "type": "object"
-                                            }
-                                        },
-                                        "status_code": {
-                                            "type": "integer",
-                                            "example": 400
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Cart not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "successful": {
-                                            "type": "boolean",
-                                            "example": false
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Cart not found"
-                                        },
-                                        "status_code": {
-                                            "type": "integer",
-                                            "example": 404
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthenticated",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "successful": {
-                                            "type": "boolean",
-                                            "example": false
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Unauthenticated"
-                                        },
-                                        "status_code": {
-                                            "type": "integer",
-                                            "example": 401
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
             "post": {
                 "tags": [
                     "Carts"
@@ -531,6 +341,198 @@
                                         "status_code": {
                                             "type": "integer",
                                             "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Cart not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Cart not found"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 404
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 401
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/carts/placeOrder": {
+            "post": {
+                "tags": [
+                    "Carts"
+                ],
+                "summary": "Place Order",
+                "description": "place order the items",
+                "operationId": "4afae034ceaf6b04cece6f639dffabfb",
+                "responses": {
+                    "200": {
+                        "description": "Cart updated successfully!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Cart updated successfully!"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "Cart": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 7
+                                                        },
+                                                        "user": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 11
+                                                                },
+                                                                "name": {
+                                                                    "type": "string",
+                                                                    "example": "Abood Sarhan"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        },
+                                                        "items": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "name": {
+                                                                        "type": "string",
+                                                                        "example": "Product A"
+                                                                    },
+                                                                    "total_quantity": {
+                                                                        "type": "integer",
+                                                                        "example": 3
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "example": []
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Insufficient product quantity to fulfill order",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "successful": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Some products do not have sufficient quantity to fulfill your order."
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "product_id": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "product_name": {
+                                                        "type": "string",
+                                                        "example": "Lind-Macejkovic"
+                                                    },
+                                                    "available_amount": {
+                                                        "type": "integer",
+                                                        "example": 3
+                                                    },
+                                                    "requested_quantity": {
+                                                        "type": "integer",
+                                                        "example": 200
+                                                    },
+                                                    "cart_item_ids": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "integer",
+                                                            "example": 19
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 400
                                         }
                                     },
                                     "type": "object"
@@ -1387,7 +1389,8 @@
                         "schema": {
                             "type": "string",
                             "enum": [
-                                "quantity,product_name"
+                                "quantity",
+                                "product_name"
                             ],
                             "example": "quantity,product_name"
                         }

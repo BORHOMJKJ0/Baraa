@@ -42,17 +42,18 @@ class CartResource extends JsonResource
 
         $items = array_map(function ($group) {
             $product = $group['product'];
-            $imageUrl =  $product->image
-                ? (str_starts_with( $product->image, 'https://via.placeholder.com')
+            $imageUrl = $product->image
+                ? (str_starts_with($product->image, 'https://via.placeholder.com')
                     ? $this->image
-                    : config('app.url').'/storage/'. $product->image)
+                    : config('app.url').'/storage/'.$product->image)
                 : null;
+
             return [
                 'product' => [
                     'id' => $product->id,
                     'name' => $product->name,
-                    'image' =>$imageUrl,
-                    'amount' =>$product->amount,
+                    'image' => $imageUrl,
+                    'amount' => $product->amount,
                     'price' => $product->price,
                     'isFavorite' => $product->favorites()
                         ->where([
