@@ -128,7 +128,7 @@ class ProductController extends Controller
 
     /**
      * @OA\Post(
-     *     path="products/search/name",
+     *     path="/products/search/name",
      *     summary="Search products by filters",
      *     description="Retrieve a paginated list of products filtered by various criteria.",
      *     tags={"Products"},
