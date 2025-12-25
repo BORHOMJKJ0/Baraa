@@ -1,66 +1,194 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Baraa — Laravel E‑commerce API 🚀
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Baraa** is a RESTful API built with **Laravel 10** that provides endpoints for user authentication (JWT + email OTP verification), product & category management, stores, carts, favorite products, and push notifications (Firebase/FCM).
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🔍 Key Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   JWT-based authentication with token refresh and **email verification using OTP** ✅
+-   Password reset via **OTP** sent to user email
+-   CRUD APIs for **Products**, **Categories**, **Stores**, **Carts** and **Cart Items**
+-   Favorite products management
+-   Push notifications via **Firebase FCM** (using service account JSON) 📱
+-   API documentation generated with **L5 Swagger / OpenAPI** (stored in `storage/api-docs`) 📚
+-   Clean architecture using Controllers → Repositories → Services
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🧰 Tech Stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   PHP >= 8.1
+-   Laravel 10
+-   MySQL (recommended) / any supported DB
+-   jwt-auth (php-open-source-saver)
+-   Kreait Firebase PHP (FCM)
+-   darkaonline/l5-swagger (OpenAPI)
+-   Vite + Axios for frontend assets
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 📥 Quick Start
 
-## Laravel Sponsors
+Prerequisites:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+-   PHP 8.1+, Composer, Node >= 16, npm/yarn
+-   Database (MySQL or other supported)
 
-### Premium Partners
+1. Clone the repository
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+git clone https://github.com/<your-org>/Baraa.git
+cd Baraa
+```
 
-## Contributing
+2. Install PHP dependencies
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+composer install --no-interaction --prefer-dist
+```
 
-## Code of Conduct
+3. Install JS dependencies (for assets)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+npm install
+# or
+# yarn
+```
 
-## Security Vulnerabilities
+4. Copy the environment file and set required values
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Windows (cmd):
 
-## License
+```cmd
+copy .env.example .env
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Linux / macOS:
+
+```bash
+cp .env.example .env
+```
+
+5. Generate app key and JWT secret
+
+```bash
+php artisan key:generate
+php artisan jwt:secret
+```
+
+6. Configure `.env` (see Environment section below), then run migrations and seeders
+
+```bash
+php artisan migrate --seed
+```
+
+7. (Optional) Generate Swagger docs
+
+```bash
+php artisan l5-swagger:generate
+```
+
+8. Serve the application
+
+```bash
+php artisan serve
+# Visit: http://localhost:8000
+```
+
+9. Run frontend dev server (assets)
+
+```bash
+npm run dev
+# production build
+npm run build
+```
+
+---
+
+## ⚙️ Important Environment Variables
+
+Add or verify these keys in your `.env`:
+
+-   Database
+    -   `DB_CONNECTION`, `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`
+-   Mail
+    -   `MAIL_MAILER`, `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_PASSWORD`, `MAIL_FROM_ADDRESS`
+-   JWT
+    -   `JWT_SECRET` (generated via `php artisan jwt:secret`)
+-   Firebase (for FCM)
+    -   `FIREBASE_CREDENTIALS` — path to Firebase service account JSON (e.g., `firebase/service-account.json`).
+-   Swagger
+    -   `L5_SWAGGER_BASE_PATH` (defaults to `/api`)
+
+> Note: The project uses OTP via email, so a working mailer (Mailtrap/Mailpit/SMTP) is required for dev/test environments.
+
+---
+
+## 📖 API Documentation
+
+-   OpenAPI spec is generated by L5 Swagger and stored at `storage/api-docs/api-docs.json`.
+-   If L5 Swagger routes are enabled, visit: `http://localhost:8000/api/documentation` to view interactive API docs.
+
+---
+
+## ✅ Running Tests
+
+```bash
+# Run Laravel test suite
+php artisan test
+# or use PHPUnit directly
+./vendor/bin/phpunit
+```
+
+Unit & Feature tests live under `tests/Unit` and `tests/Feature`.
+
+---
+
+## 🧭 Common Artisan & Git Commands
+
+-   Install deps: `composer install` / `npm install`
+-   Migrate & seed: `php artisan migrate --seed`
+-   Create storage link (if needed): `php artisan storage:link`
+-   Generate API docs: `php artisan l5-swagger:generate`
+-   Run tests: `php artisan test`
+
+---
+
+## 📁 Project Structure (high level)
+
+-   `app/Http/Controllers` — API controllers (Users, Products, Stores, Carts...)
+-   `app/Services` — business logic (e.g., `FcmService`)
+-   `app/Repositories` — persistence layer
+-   `app/Notifications` — OTP and other notifications
+-   `database/migrations` & `database/seeders` — schema + seed data
+-   `routes/api.php` — API routes
+-   `storage/api-docs` — generated OpenAPI JSON
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome — open issues or PRs. Please follow these guidelines:
+
+-   Branch from `main` and open a PR with a clear description
+-   Write tests for new features and ensure all tests pass
+-   Keep changes focused and documented
+
+For major changes, open an issue first to discuss design and approach.
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**. See the `LICENSE` file for details.
+
+---
+
+## 📬 Support
+
+If you need help, open an issue or contact the maintainer at `support@yourapi.com`.
+
+---
+
+_Generated README for the Baraa project — feel free to request changes (badges, CI examples, or environment templates)._
